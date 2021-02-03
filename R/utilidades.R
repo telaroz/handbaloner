@@ -18,3 +18,27 @@ draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start =
                          y = center[2] + diameter / 2 * sin(tt))
 
 }
+
+
+#' Calculate the distance to goal in any point of a handbaloner::court()
+#'
+#' @param shot_coordinates
+#'
+#' @return
+#' @export
+#'
+#' @examples
+distance_to_goal <- function(shot_coordinates){
+
+  x <- shot_coordinates[1]
+  y <- shot_coordinates[2]
+  starting_point <- as.numeric(unlist(strsplit(data.table::fcase(x > 0 & y < -1.5, paste(20, -1.5),
+                                                                 x > 0 & y > 1.5, paste(20, 1.5),
+                                                                 x < 0 & y < -1.5, paste(-20, -1.5),
+                                                                 x < 0 & y > 1.5, paste(-20, 1.5),
+                                                                 x > 0 & data.table::between(y, -1.5, 1.5), paste(20, y),
+                                                                 x < 0 & data.table::between(y, -1.5, 1.5), paste(-20, y)),' ')))
+
+  sqrt(sum((starting_point - shot_coordinates) ^ 2))
+}
+
