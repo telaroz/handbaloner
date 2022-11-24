@@ -1,6 +1,6 @@
 #' Creación del campo completo
 #'
-#' @param vertical
+#' @param vertical Si la visualización es vertical u horizontal
 #' @param flip
 #' @param court_color
 #' @param area_color
@@ -18,8 +18,8 @@ court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
 
     type_of_plot <-
       ifelse(vertical,
-             paste0('ggplot2::aes(y, ', make_flip, 'x)'),
-             paste0('ggplot2::aes(', make_flip, 'x, ', 'y)'))
+             paste0('ggplot2::aes(', make_flip, 'y, ', make_flip, 'x)'),
+             paste0('ggplot2::aes(', 'x, ', make_flip, 'y)'))
 
 
     plot <- ggplot2::ggplot(mapping = eval(parse(text = type_of_plot))) +
