@@ -13,11 +13,25 @@ half_court(
 )
 }
 \arguments{
-\item{lines_color}{}
+\item{vertical}{Si la visualización se quiere vertical, poner TRUE}
+
+\item{flip}{Si la visualizción se quiere rotada (ver dónde está la zona de cambios)}
+
+\item{court_color}{Color del campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)}
+
+\item{area_color}{Color del área. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)}
+
+\item{lines_color}{Color de las líneas de campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)}
 }
 \value{
-
+Un gráfico completo con los colores y orientación deseada
 }
 \description{
 Creación de medio campo verticalmente (arriba)
+}
+\examples{
+\dontrun{
+half_court(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
+area_color = '#d1b111', lines_color = 'white')
+}
 }

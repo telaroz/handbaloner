@@ -7,7 +7,7 @@
 lines_generator()
 }
 \value{
-
+Simplemente genera las líneas necesarias para los gráficos.
 }
 \description{
 Genera las líneas necesarias para los plots

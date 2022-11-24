@@ -24,10 +24,13 @@ draw_circle(
 
 \item{end}{Fin del círculo (Va de 0 a 2pi)}
 }
-\value{
-
-}
 \description{
 Dibujar un círculo.
 Tomado de: http://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2
+}
+\examples{
+\dontrun{
+draw_circle(center = c(0, 0), diameter = 1, npoints = 12000,
+start = 0, end = 2)
+}
 }

@@ -2,16 +2,24 @@
 % Please edit documentation in R/utilidades.R
 \name{distance_to_goal}
 \alias{distance_to_goal}
-\title{Calculate the distance to goal in any point of a handbaloner::court()}
+\title{Calcula la distancia a gol desde unas coordenadas en handbaloner::court()}
 \usage{
 distance_to_goal(shot_coordinates)
 }
 \arguments{
-\item{shot_coordinates}{}
+\item{shot_coordinates}{Coordenadas del tiro (centro del campo en (0,0))}
 }
 \value{
 
 }
 \description{
-Calculate the distance to goal in any point of a handbaloner::court()
+Toma el centro del campo como las coordenadas (0, 0) y calcula la distancia
+a gol desde un punto en específico. El cálculo se toma desde el punto al gol
+más cercano, es decir, desde el propio campo. Un tiro del campo contrario no
+lo calculará correctamente.
+}
+\examples{
+\dontrun{
+distance_to_goal(shot_coordinates = c(-10, -3))
+}
 }

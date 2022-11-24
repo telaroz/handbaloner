@@ -1,12 +1,12 @@
 Package: handbaloner
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Utilidades para el análisis de datos de balonmano
+Version: 0.0.2
+Authors@R: person("Valery", "Zúñiga Kondrashov", email = "telaroz@gmail.com",
+    role = c("aut", "cre"))
+Maintainer: Valery Zúñiga Kondrashov <telaroz@gmail.com>
+Description: Utilidades para el analisis de datos de balonmano. Se generan campos y medios campos con ggplot.  
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends: 
@@ -14,3 +14,5 @@ Depends:
 RoxygenNote: 7.1.1
 URL: https://github.com/telaroz/handbaloner
 BugReports: https://github.com/telaroz/handbaloner/issues
+Imports: 
+    magrittr
