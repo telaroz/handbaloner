@@ -6,10 +6,11 @@
 #' @param start Inicio del círculo (Va de 0 a 2pi)
 #' @param end Fin del círculo (Va de 0 a 2pi)
 #'
-#' @return
-#' @export
-#'
 #' @examples
+#' \dontrun{
+#' draw_circle(center = c(0, 0), diameter = 1, npoints = 12000,
+#' start = 0, end = 2)
+#' }
 draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start = 0, end = 2){
 
   tt <- seq(start*pi, end*pi, length.out = npoints)
@@ -20,14 +21,21 @@ draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start =
 }
 
 
-#' Calculate the distance to goal in any point of a handbaloner::court()
+#' Calcula la distancia a gol desde unas coordenadas en handbaloner::court()
 #'
-#' @param shot_coordinates
+#' Toma el centro del campo como las coordenadas (0, 0) y calcula la distancia
+#' a gol desde un punto en específico. El cálculo se toma desde el punto al gol
+#' más cercano, es decir, desde el propio campo. Un tiro del campo contrario no
+#' lo calculará correctamente.
+#' @param shot_coordinates Coordenadas del tiro (centro del campo en (0,0))
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' distance_to_goal(shot_coordinates = c(-10, -3))
+#' }
 distance_to_goal <- function(shot_coordinates){
 
   x <- shot_coordinates[1]

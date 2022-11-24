@@ -1,14 +1,18 @@
 #' Creación del campo completo
 #'
-#' @param vertical Si la visualización es vertical u horizontal
-#' @param flip
-#' @param court_color
-#' @param area_color
-#' @param lines_color
-#' @return
+#' @param vertical Si la visualización se quiere vertical, poner TRUE
+#' @param flip Si la visualizción se quiere rotada (ver dónde está la zona de cambios)
+#' @param court_color Color del campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
+#' @param area_color Color del área. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
+#' @param lines_color Color de las líneas de campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
+#' @return Un gráfico completo con los colores y orientación deseada
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' court(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
+#' area_color = '#d1b111', lines_color = 'white')
+#' }
 court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
                     area_color = '#d1b111', lines_color = 'white'){
     lines <- handbaloner::lines_generator()
@@ -44,7 +48,7 @@ court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
       ggplot2::geom_path(data = lines$sevenm_2, size = 1, color = lines_color) +
       ggplot2::geom_path(data = lines$substitution_1, size = 1, color = lines_color) +
       ggplot2::geom_path(data = lines$substitution_2, size = 1, color = lines_color) +
-      ggplot2::coord_fixed() + # We want to maintain the 40x20 proportion
+      ggplot2::coord_fixed() + # Queremos mantener la proporción 40x20
       ggplot2::theme_void()
 
     return(plot)
@@ -54,16 +58,20 @@ court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
 
 #' Creación de medio campo verticalmente (arriba)
 #'
-#' @param vertical
-#' @param flip
-#' @param court_color
-#' @param area_color
-#' @param lines_color
+#' @param vertical Si la visualización se quiere vertical, poner TRUE
+#' @param flip Si la visualizción se quiere rotada (ver dónde está la zona de cambios)
+#' @param court_color Color del campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
+#' @param area_color Color del área. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
+#' @param lines_color Color de las líneas de campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
 #'
-#' @return
+#' @return Un gráfico completo con los colores y orientación deseada
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' half_court(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
+#' area_color = '#d1b111', lines_color = 'white')
+#' }
 half_court <- function(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
                        area_color = '#d1b111', lines_color = 'white'){
 
@@ -89,7 +97,7 @@ half_court <- function(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
     ggplot2::geom_path(data = lines$free_thr_compl2, linetype = 'dashed', size = 1, color = lines_color) +
     ggplot2::geom_path(data = lines$goal_restr_2, size = 1, color = lines_color) +
     ggplot2::geom_path(data = lines$sevenm_2, size = 1, color = lines_color) +
-    ggplot2::coord_fixed() +  # We want to maintain the 40x20 proportion
+    ggplot2::coord_fixed() + # Queremos mantener la proporción 40x20
     ggplot2::theme_void()
 
   return(plot)

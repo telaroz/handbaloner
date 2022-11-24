@@ -1,7 +1,6 @@
 #' Genera las líneas necesarias para los plots
 #'
-#' @return
-#' @export
+#' @return Simplemente genera las líneas necesarias para los gráficos.
 lines_generator <- function(){
   lines <- list()
 
