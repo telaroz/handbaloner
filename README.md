@@ -61,6 +61,37 @@ punto del campo al marco más cercano, según sus coordenadas (\[-40, 40\]
 en el eje x y \[-20, 20\] en el eje y):
 
 ``` r
-handbaloner::distance_to_goal(c(10, 3))
+distance_to_goal(c(10, 3))
 #> [1] 10.11187
 ```
+
+Además, ya que este gráfico es un ggplot, podemos seguir agregando más
+capas encima. Por ejemplo, generemos un `data.frame` con coordenadas de
+ciertos tiros y si hubo gol o no. A este `data.frame` le agregaremos
+además la distancia a gol y graficaremos con puntos en color rojo y
+verde si fueron gol o no.
+
+``` r
+tiros <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
+                       y = c(2, 5, -3, -1, 0),
+                       gol = c(1, 0, 1, 1, 0))
+
+dplyr::mutate(tiros, distancia_a_gol = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
+#> # A tibble: 5 x 4
+#>       x     y   gol distancia_a_gol
+#>   <dbl> <dbl> <dbl>           <dbl>
+#> 1 -13       2     1            7.02
+#> 2 -12       5     0            8.73
+#> 3  11      -3     1            9.12
+#> 4 -11      -1     1            9   
+#> 5   9.5     0     0           10.5
+```
+
+``` r
+court() +
+  ggplot2::geom_point(data = tiros, ggplot2::aes(x, y),
+                      color = ifelse(tiros$gol == 1, 'Green', 'Red'),
+                      size = 4)
+```
+
+<img src="man/figures/README-campo con tiros-1.png" width="100%" />
