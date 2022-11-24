@@ -15,7 +15,7 @@
 #' }
 court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
                     area_color = '#d1b111', lines_color = 'white'){
-    lines <- handbaloner::lines_generator()
+    lines <- lines_generator()
     make_flip <- NULL
 
     if(flip) make_flip <- '-'
@@ -75,7 +75,7 @@ court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
 half_court <- function(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
                        area_color = '#d1b111', lines_color = 'white'){
 
-  lines <- handbaloner::lines_generator()
+  lines <- lines_generator()
   make_flip <- NULL
 
   if(flip) make_flip <- '-'
