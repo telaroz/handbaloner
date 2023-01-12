@@ -94,7 +94,7 @@ court() +
 
 <img src="man/figures/README-court with shots-1.png" width="100%" />
 
-## Generate Play by Play tidy Data from IHF files
+## Generate Play by Play tidy data from IHF files
 
 First, you need to download the PBP pdf file. You can use the
 `scrape_from_ihf` function to do so. Find the link for the match
