@@ -1,20 +1,20 @@
-#' Convierte la planilla Play by Play de la página de la IHF en una tabla tidy
+#' Converts the play by play sheet from the IFH site to a tidy table
 #'
 #' @param input Directorio donde se encuentra el archivo pbp.
+#' @param two_min How the 2 minutes suspension is described
+#' @param columns_in_spanish By default, the language is english. If TRUE, the colnames will be in spanish
 #'
-#' @return Una tabla con el partido en formato tidy (una observación por fila)
-#' #@export
+#' @return Una data.table with the play by play of the game in tidy format (one observation per row)
+#' @export
 #'
-#' @examples generar_pbp_tidy('01pbp.pdf')
-generar_pbp_tidy <- function(input, two_min = '2-minutes suspension', match_id_pattern = 'Match No: ',
-                             womens_string_identifier = 'Women', initial_goalkeepers_together = TRUE){
+#' @examples generate_tidy_pbp('01pbp.pdf')
+generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
+                              columns_in_spanish = FALSE){
   texto <- pdftools::pdf_text(input) %>%
     readr::read_lines()
 
-  femenino <- any(stringr::str_detect(texto, womens_string_identifier))
-
-    numero_partido_ext <- texto[stringr::str_detect(texto, match_id_pattern)][1] %>%
-    stringr::str_extract(paste0(match_id_pattern, '\\d+'))  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
+  numero_partido_ext <- texto[stringr::str_detect(texto, 'Match No: ')][1] %>%
+    stringr::str_extract('Match No: \\d+')  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
     stringr::str_extract('\\d+') %>%
     as.numeric()
   # 1.1 - Limpieza de jugadores ---------------------------------------------
@@ -90,34 +90,14 @@ generar_pbp_tidy <- function(input, two_min = '2-minutes suspension', match_id_p
 
   # Agregar si 1ero o 2do tiempo o tiempos extra
 
+  pbp[tiempo < '59:59' &  stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper'),
+      mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
 
+  pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '60:00',
+      mitad := 3]
 
-  if(initial_goalkeepers_together){
-
-
-
-    pbp[tiempo < '59:59' &  stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper'),
-        mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
-
-
-    pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '60:00',
-        mitad := 3]
-
-    pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '70:00',
-        mitad := 4]
-
-
-  }else{
-    pbp[tiempo < '59:59' &  (stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')),
-        mitad := data.table::fifelse(tiempo == '0:00', 1, data.table::fifelse(tiempo == '30:00', 2, NA_integer_))]
-
-    pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) & tiempo == '60:00',
-        mitad := 3]
-
-    pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) & tiempo == '70:00',
-        mitad := 4]
-
-  }
+  pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '70:00',
+      mitad := 4]
 
 
   pbp[, tiempo_numerico := as.numeric(lubridate::ms(tiempo))]
@@ -187,7 +167,7 @@ generar_pbp_tidy <- function(input, two_min = '2-minutes suspension', match_id_p
     tabla[stringr::str_detect(accion, '\\bShot\\b|Penalty shot') & stringr::str_detect(accion, 'Goal', negate = TRUE) , ':='(tiro_numero = numero,
                                                                                                                              tipo_de_tiro = stringr::str_remove(accion, paste0(jugadores$nombre_planilla, collapse = '|')))]
 
-    desc_tiros <- egipto21::descripcion_tiros
+    desc_tiros <- handbaloner::descripcion_tiros
 
     tabla[, posicion_marco := stringr::str_extract(accion, paste0(desc_tiros$posicion_marco[desc_tiros$posicion_marco != ''], collapse = '|'))]
     tabla[, posicion_tiro := stringr::str_extract(accion, paste0(desc_tiros$posicion_tiro[desc_tiros$posicion_tiro != ''], collapse = '|'))]
@@ -367,10 +347,10 @@ generar_pbp_tidy <- function(input, two_min = '2-minutes suspension', match_id_p
   tercera_mitad <- listo[mitad == 3]
   cuarta_mitad <- listo[mitad == 4]
 
-  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ egipto21::llenar_nas(primera_mitad, .x))
-  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ egipto21::llenar_nas(segunda_mitad, .x))
-  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ egipto21::llenar_nas(tercera_mitad, .x))
-  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ egipto21::llenar_nas(cuarta_mitad, .x))
+  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ fill_nas(primera_mitad, .x))
+  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ fill_nas(segunda_mitad, .x))
+  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ fill_nas(tercera_mitad, .x))
+  purrr::walk(c('posesion', 'numero_de_posesion', 'inicio_posesion', 'fin_posesion'), ~ fill_nas(cuarta_mitad, .x))
 
   listo <- rbind(primera_mitad, segunda_mitad, tercera_mitad, cuarta_mitad)
 
@@ -391,33 +371,42 @@ generar_pbp_tidy <- function(input, two_min = '2-minutes suspension', match_id_p
         ':='(inicio_posesion = NA, fin_posesion = NA,
              sin_portero = NA, cantidad_jugadores_campo_real = NA)]
 
-
-# Agregar si es partido femenino o masculino
-
-listo[, femenino := femenino]
-
-
-  listo <- listo[accion != '', .(id_partido = id, femenino, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
-                                 portero, portero_rival, asistencia_numero, gol_numero, asistencia_numero,
+  listo <- listo[accion != '', .(id_partido = id, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
+                                 portero, portero_rival, asistencia_numero, gol_numero,
                                  tiro_numero, gol, velocidad_tiro, posicion_marco, posicion_tiro, post, saved,
                                  posicion_marco_vertical, posicion_marco_horizontal, numero_causa_7m,
-                                 numero_recibe_7m, turnover, falta_tecnica, robo, suspension, es_casa, equipo, cantidad_suspendidos,
+                                 numero_recibe_7m, turnover, falta_tecnica, robo, suspension, es_casa, cantidad_suspendidos,
                                  sin_portero, cantidad_jugadores_campo = cantidad_jugadores_campo_real, posesion,
                                  numero_posesion = numero_de_posesion, inicio_posesion, fin_posesion, marcador, diferencia)]
+
+  if(!columns_in_spanish) {
+
+    colnames(listo) <- c("match_id", "time", "numeric_time", "half", "action",
+                         "number",  "team", "goalkeeper", "opponent_goalkeeper",
+                         "assist_number", "goal_number", "shot_number", "goal",
+                         "shot_speed", "in_goal_position", "shot_position",
+                         "post", "saved", "vertical_goal_position",
+                        "horizontal_goal_position", "causes_7m_number",
+                        "receives_7m_number", "turnover", "technical_foul",
+                        "steal", "suspension", "is_home",  "number_suspended",
+                        "no_goalkeeper", "number_court_players", "posession",
+                        "number_of_possesion", "start_of_possession",
+                        "end_of_possession", "score", "lead")
+  }
 
   return(listo)
 }
 
 
-#' Jugadores y Cuerpo Técnico de un partido en particular
+#' Players and coaches
 #'
-#' @param input Directorio donde se encuentra el archivo pbp.
+#' @param input Directory where the pbp is located
 #'
-#' @return Una lista de dos tablas: jugadores y cuerpo técnico
+#' @return A list with two tables: players and coaches
 #' @export
 #'
-#' @examples jug_y_dt('01pbp.pdf')
-jug_y_dt <- function(input){
+#' @examples players_and_coaches('01pbp.pdf')
+players_and_coaches <- function(input, columns_in_spanish = FALSE){
 
   texto <- pdftools::pdf_text(input) %>%
     readr::read_lines()
@@ -467,6 +456,11 @@ jug_y_dt <- function(input){
 
   jugadores[, numero_partido := numero_partido_ext]
   cuerpo_tecnico[, numero_partido := numero_partido_ext]
+
+  if(columns_in_spanish) {
+    colnames(jugadores) <- c("team", "number", "name", "name_in_sheet", "game_number")
+    colnames(cuerpo_tecnico) <- c("team", "number", "name",  "game_number")
+  }
 
   return(list(jugadores, cuerpo_tecnico))
 }

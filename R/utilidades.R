@@ -50,3 +50,45 @@ distance_to_goal <- function(shot_coordinates){
   sqrt(sum((starting_point - shot_coordinates) ^ 2))
 }
 
+#' Function used to fill NAs in the possesions sections in pbp
+#'
+#' @param tabla Tabla que recibe
+#' @param columna Columna a llenar los NAs
+#'
+#' @return
+#' @export
+#'
+#' @examples fill_nas(table, 'numero_jugada')
+fill_nas <- function(table, column){
+
+  tabla[, (column) := get(column)[1], cumsum(!is.na(get(column)))]
+
+  primer_no_na <- table[!is.na(get(column))][[column]][1]
+
+  tabla[is.na(get(column)), (column) := primer_no_na]
+}
+
+#' Function to download pdfs of World Championships in the new IHF site
+#'
+#' @param link Site were we want to download the pdfs
+#' @param folder Folder were the pdfs will be downloaded
+#' @param from_archive Whether the pdfs are in the archive.ihf.info site
+#'
+#' @return
+#' @export
+#'
+#' @examples scrape_from_ihf(link = 'https://www.ihf.info/competitions/men/308/27th-ihf-men039s-world-championship-2021/22415/match-center/23765', carpeta = 'matches')
+scrape_from_ihf <- function(link, folder, from_archive = FALSE){
+  link %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("a") %>%
+    rvest::html_attr("href") %>%
+    stringr::str_subset("\\.pdf|\\.PDF") %>%
+    purrr::map_if(.f = ~ paste0('https://archive.ihf.info', .),
+                  .p = rep(from_archive, length(.)) == rep(TRUE, length(.))) %>%
+    unlist() %>%
+    as.character() %>%
+    purrr::walk2(., paste0(folder,'/', basename(.) %>%
+                             stringr::str_remove('[?=].*')),
+                 download.file, mode = "wb")
+}
