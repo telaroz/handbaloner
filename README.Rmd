@@ -34,7 +34,6 @@ devtools::install_github("telaroz/handbaloner")
 
 In this example, we can draw a basic court.
 
-
 ```{r basic example}
 library(handbaloner)
 
