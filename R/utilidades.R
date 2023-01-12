@@ -61,11 +61,11 @@ distance_to_goal <- function(shot_coordinates){
 #' @examples fill_nas(table, 'numero_jugada')
 fill_nas <- function(table, column){
 
-  tabla[, (column) := get(column)[1], cumsum(!is.na(get(column)))]
+  table[, (column) := get(column)[1], cumsum(!is.na(get(column)))]
 
   primer_no_na <- table[!is.na(get(column))][[column]][1]
 
-  tabla[is.na(get(column)), (column) := primer_no_na]
+  table[is.na(get(column)), (column) := primer_no_na]
 }
 
 #' Function to download pdfs of World Championships in the new IHF site

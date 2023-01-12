@@ -3,9 +3,9 @@
 \docType{data}
 \name{xg_egipto21}
 \alias{xg_egipto21}
-\title{Prices of 50,000 round cut diamonds.}
+\title{Expected goals from the complete egypt 2021 men's world championship}
 \format{
-A data frame with 53940 rows and 10 variables:
+A data frame with 12 rows and 3 variables:
 \describe{
   \item{posicion_tiro}{Position of the shot}
   \item{xg}{Expected Goals}
@@ -20,7 +20,6 @@ A data frame with 53940 rows and 10 variables:
 xg_egipto21
 }
 \description{
-A dataset containing the prices and other attributes of almost 54,000
-diamonds.
+Expected goals from the complete egypt 2021 men's world championship
 }
 \keyword{datasets}

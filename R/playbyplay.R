@@ -457,7 +457,7 @@ players_and_coaches <- function(input, columns_in_spanish = FALSE){
   jugadores[, numero_partido := numero_partido_ext]
   cuerpo_tecnico[, numero_partido := numero_partido_ext]
 
-  if(columns_in_spanish) {
+  if(!columns_in_spanish) {
     colnames(jugadores) <- c("team", "number", "name", "name_in_sheet", "game_number")
     colnames(cuerpo_tecnico) <- c("team", "number", "name",  "game_number")
   }

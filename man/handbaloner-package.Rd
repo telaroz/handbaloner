@@ -4,9 +4,9 @@
 \name{handbaloner-package}
 \alias{handbaloner}
 \alias{handbaloner-package}
-\title{handbaloner: Utilidades para el análisis de datos de balonmano}
+\title{handbaloner: Utilities for handball data analysis.}
 \description{
-Utilidades para el analisis de datos de balonmano. Se generan campos y medios campos con ggplot.
+Utilities for handball data analysis. Court, half court generation with ggplot. Utilidades para el analisis de datos de balonmano. Se generan campos y medios campos con ggplot.
 }
 \seealso{
 Useful links:

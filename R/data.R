@@ -3,12 +3,10 @@ data.table::setkey(xg_egipto21, posicion_tiro)
 
 usethis::use_data(xg_egipto21, xg_egipto21, overwrite = TRUE)
 
-#' Prices of 50,000 round cut diamonds.
+#' Expected goals from the complete egypt 2021 men's world championship
 #'
-#' A dataset containing the prices and other attributes of almost 54,000
-#' diamonds.
 #'
-#' @format A data frame with 53940 rows and 10 variables:
+#' @format A data frame with 12 rows and 3 variables:
 #' \describe{
 #'   \item{posicion_tiro}{Position of the shot}
 #'   \item{xg}{Expected Goals}
