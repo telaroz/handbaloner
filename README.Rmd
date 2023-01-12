@@ -40,8 +40,6 @@ library(handbaloner)
 court()
 ```
 
-Podemos cambiar los colores, rotar verticalmente y en espejo con sus parámetros.
-
 We can change the colours, rotate vertically and mirror the court with the 
 functions' parameters
 
@@ -89,5 +87,26 @@ court() +
   ggplot2::geom_point(data = tiros, ggplot2::aes(x, y),
                       color = ifelse(tiros$gol == 1, 'Green', 'Red'),
                       size = 4)
+```
+
+## Generate Play by Play tidy Data from IHF files
+
+First, you need  to download the PBP pdf file. You can use the `scrape_from_ihf`
+function to do so. Find the link for the match information and set the folder to
+download the file. 
+
+For the first match of the 2023 World Men's Handball Championship, you can 
+download all PDFs as follows:
+
+```{r download files, eval = FALSE}
+
+scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men039s-world-championship-2023/101253/match-center/118895",
+                folder = "pol_swe")
+```
+
+Now, use the `generate_tidy_pbp` to generate a `data.frame` in a tidy format. 
+
+```{r generate tidy pbp}
+generate_tidy_pbp("pol_swe/02PBP.PDF")
 ```
 
