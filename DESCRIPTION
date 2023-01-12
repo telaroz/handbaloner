@@ -1,11 +1,13 @@
 Package: handbaloner
 Type: Package
-Title: Utilidades para el análisis de datos de balonmano
-Version: 0.0.2
+Title: Utilities for handball data analysis.
+Version: 0.0.3
 Authors@R: person("Valery", "Zúñiga Kondrashov", email = "telaroz@gmail.com",
     role = c("aut", "cre"))
 Maintainer: Valery Zúñiga Kondrashov <telaroz@gmail.com>
-Description: Utilidades para el analisis de datos de balonmano. Se generan campos y medios campos con ggplot.  
+Description: 
+Utilities for handball data analysis. Court, half court generation with ggplot.
+Utilidades para el analisis de datos de balonmano. Se generan campos y medios campos con ggplot.  
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
