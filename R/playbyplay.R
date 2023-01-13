@@ -326,6 +326,9 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   pos[numero_de_posesion == 1, inicio_posesion := '0:00']
   pos[mitad == 1, fin_posesion := replace(fin_posesion, .N, '30:00')]
+  pos[mitad == 2 & inicio_posesion != "",
+      inicio_posesion := replace(inicio_posesion, 1, '30:00')]
+
   pos[numero_de_posesion == max(numero_de_posesion), fin_posesion :=
         data.table::fcase(max(mitad) == 2,'60:00',
                           max(mitad) == 3, '70:00',
