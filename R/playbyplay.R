@@ -1,6 +1,6 @@
 #' Converts the play by play sheet from the IFH site to a tidy table
 #'
-#' @param input Directorio donde se encuentra el archivo pbp.
+#' @param input Path of the Play by Play PDF file
 #' @param two_min How the 2 minutes suspension is described
 #' @param columns_in_spanish By default, the language is english. If TRUE, the colnames will be in spanish
 #'
