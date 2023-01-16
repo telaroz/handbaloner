@@ -158,27 +158,36 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
     # Describe Goals
 
-    tabla[stringr::str_detect(accion, '\\bGoal\\b'), ':='(asistencia_numero = stringr::str_extract(accion, '\\(([^)]+)\\)') %>% stringr::str_extract('\\d+'),
-                                                          gol_numero = numero,
-                                                          tipo_de_gol = stringr::str_trim(stringr::str_remove(accion, '\\(([^)]+)\\)')))]
+    tabla[stringr::str_detect(accion, '\\bGoal\\b'),
+          ':='(asistencia_numero = stringr::str_extract(accion, '\\(([^)]+)\\)') %>%
+                 stringr::str_extract('\\d+'),
+               gol_numero = numero,
+               tipo_de_gol = stringr::str_trim(stringr::str_remove(accion, '\\(([^)]+)\\)')))]
 
     # Describe shots (not Goals)
 
-    tabla[stringr::str_detect(accion, '\\bShot\\b|Penalty shot') & stringr::str_detect(accion, 'Goal', negate = TRUE) , ':='(tiro_numero = numero,
-                                                                                                                             tipo_de_tiro = stringr::str_remove(accion, paste0(jugadores$nombre_planilla, collapse = '|')))]
+    tabla[stringr::str_detect(accion, '\\bShot\\b|Penalty shot') &
+            stringr::str_detect(accion, 'Goal', negate = TRUE) ,
+          ':='(tiro_numero = numero,
+               tipo_de_tiro = stringr::str_remove(accion, # Quizás se necesita un str_remove_all
+                                                  paste0(jugadores$nombre_planilla, collapse = '|')))]
 
     desc_tiros <- handbaloner::descripcion_tiros
 
-    tabla[, posicion_marco := stringr::str_extract(accion, paste0(desc_tiros$posicion_marco[desc_tiros$posicion_marco != ''], collapse = '|'))]
-    tabla[, posicion_tiro := stringr::str_extract(accion, paste0(desc_tiros$posicion_tiro[desc_tiros$posicion_tiro != ''], collapse = '|'))]
+    tabla[, posicion_marco := stringr::str_extract(accion,
+                                                   paste0(desc_tiros$posicion_marco[desc_tiros$posicion_marco != ''], collapse = '|'))]
+    tabla[, posicion_tiro := stringr::str_extract(accion,
+                                                  paste0(desc_tiros$posicion_tiro[desc_tiros$posicion_tiro != ''], collapse = '|'))]
 
     tabla[stringr::str_detect(accion, 'post'), post := 1]
     tabla[stringr::str_detect(accion, 'saved'), saved := 1]
     tabla[!is.na(tipo_de_gol), gol := 1]
     tabla[, gol := as.numeric(gol)]
 
-    tabla[, ':='(posicion_marco_vertical = stringr::str_extract(posicion_marco, 'bottom|top|middle'),
-                 posicion_marco_horizontal = stringr::str_extract(posicion_marco, 'left|centre|right'))]
+    tabla[, ':='(posicion_marco_vertical = stringr::str_extract(posicion_marco,
+                                                                'bottom|top|middle'),
+                 posicion_marco_horizontal = stringr::str_extract(posicion_marco,
+                                                                  'left|centre|right'))]
 
 
     tabla[stringr::str_detect(accion, '7m caused'), numero_causa_7m := numero]
@@ -207,11 +216,7 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
     tabla[, no_jugada := 1:.N]
     if(nrow(tabla[!is.na(suspension)]) != 0){ # Hay equipos que no tienen suspensiones de 2 minutos en el partido
 
-
-
       auxiliar <- tabla[tabla, .(list(no_jugada)), on = .(tiempo_numerico > inicia_suspension, tiempo_numerico <= termina_suspension), by = .EACHI]
-
-
 
       cantidad_jugadores_menos <- (auxiliar[!is.na(V1)]$V1 %>% unlist() %>% data.table::data.table(no_jugada = .))[,.N,no_jugada]
 
@@ -233,9 +238,6 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   }
 
-
-
-  #final <- cbind(func_tidy_equipo(pbpc), func_tidy_equipo(pbpv, casa = FALSE))
   casa <- func_tidy_pbp_por_equipo(tabla = pbpc, casa = TRUE, nombre_equipo = nombres_equipos[1])
   visita <- func_tidy_pbp_por_equipo(tabla = pbpv, casa = FALSE, nombre_equipo = nombres_equipos[2])
 
@@ -273,14 +275,9 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   posible_cambio_posesion_para_secuencias <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', 'saved')
 
-
-
-
-
   la_tiene <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', '7m received', 'Team timeout', 'saved')
 
   no_la_tiene <- c('Steal', 'Block', '7m caused')
-
 
 
   pos[, lt := as.numeric(stringr::str_detect(accion, paste0(la_tiene, collapse = '|')))]
@@ -305,9 +302,6 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   pos[lt == 0 & nlt == 0, posesion := NA]
 
-
-
-
   pos <- pos[!is.na(posesion)]
 
   pos[, numero_de_posesion := data.table::rleid(posesion, mitad)]
@@ -320,7 +314,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   aux <- unique(pos, by = c('numero_de_posesion', 'fin_posesion'))
 
 
-  pos[aux[aux, .(numero_de_posesion, inicio_posesion = fin_posesion), on = .(numero_de_posesion == numero_posesion_anterior)]
+  pos[aux[aux, .(numero_de_posesion, inicio_posesion = fin_posesion),
+          on = .(numero_de_posesion == numero_posesion_anterior)]
       , inicio_posesion := i.inicio_posesion, on = 'numero_de_posesion']
 
 
@@ -396,8 +391,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
                         "horizontal_goal_position", "causes_7m_number",
                         "receives_7m_number", "turnover", "technical_foul",
                         "steal", "suspension", "is_home",  "number_suspended",
-                        "no_goalkeeper", "number_court_players", "posession",
-                        "number_of_possesion", "start_of_possession",
+                        "no_goalkeeper", "number_court_players", "possession",
+                        "number_of_possession", "start_of_possession",
                         "end_of_possession", "score", "lead")
   }
 
