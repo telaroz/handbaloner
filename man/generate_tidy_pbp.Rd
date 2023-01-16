@@ -11,7 +11,7 @@ generate_tidy_pbp(
 )
 }
 \arguments{
-\item{input}{Directorio donde se encuentra el archivo pbp.}
+\item{input}{Path of the Play by Play PDF file}
 
 \item{two_min}{How the 2 minutes suspension is described}
 

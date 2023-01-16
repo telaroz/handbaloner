@@ -1,7 +1,7 @@
 Package: handbaloner
 Type: Package
 Title: Utilities for handball data analysis.
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: person("Valery", "Zúñiga Kondrashov", email = "telaroz@gmail.com",
     role = c("aut", "cre"))
 Maintainer: Valery Zúñiga Kondrashov <telaroz@gmail.com>
