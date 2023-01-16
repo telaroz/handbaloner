@@ -373,7 +373,14 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
         ':='(inicio_posesion = NA, fin_posesion = NA,
              sin_portero = NA, cantidad_jugadores_campo_real = NA)]
 
-  listo <- listo[accion != '', .(id_partido = id, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
+  resumen_equipos <- listo[,.N,.(equipo, es_casa)]
+
+  equipo_casa <- resumen_equipos[es_casa == TRUE]$equipo
+  equipo_visita <- resumen_equipos[es_casa == FALSE]$equipo
+
+  listo[, equipos := paste(equipo_casa, equipo_visita, sep = " - ")]
+
+  listo <- listo[accion != '', .(id_partido = id, equipos, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
                                  portero, portero_rival, asistencia_numero, gol_numero,
                                  tiro_numero, gol, velocidad_tiro, posicion_marco, posicion_tiro, post, saved,
                                  posicion_marco_vertical, posicion_marco_horizontal, numero_causa_7m,
@@ -383,7 +390,7 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   if(!columns_in_spanish) {
 
-    colnames(listo) <- c("match_id", "time", "numeric_time", "half", "action",
+    colnames(listo) <- c("match_id", "teams", "time", "numeric_time", "half", "action",
                          "number",  "team", "goalkeeper", "opponent_goalkeeper",
                          "assist_number", "goal_number", "shot_number", "goal",
                          "shot_speed", "in_goal_position", "shot_position",
