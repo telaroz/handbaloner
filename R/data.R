@@ -28,23 +28,7 @@ usethis::use_data(xg_egipto21, xg_egipto21, overwrite = TRUE)
 #' }
 "complete_team_names"
 complete_team_names <-
-  data.table::data.table(team = c("FRA", "POL", "CHI", "IRI", "ESP", "MNE",
-                                  "KSA", "SLO", "CPV", "URU", "SWE", "BRA",
-                                  "HUN", "KOR", "ISL","POR", "ARG", "NED",
-                                  "NOR", "MKD", "SRB", "ALG", "GER", "QAT",
-                                  "BRN", "TUN", "DEN", "BEL", "MAR", "USA",
-                                  "EGY", "CRO"),
-                         complete_name = c("France", "Poland", "Chile", "Iran",
-                                           "Spain", "Montenegro", "Saudi Arabia",
-                                           "Slovenia", "Cape Verde", "Uruguay",
-                                           "Sweden", "Brazil", "Hungary",
-                                           "South Korea", "Iceland","Portugal",
-                                           "Argentina", "Netherlands", "Norway",
-                                           "North Macedonia", "Serbia",
-                                           "Algeria", "Germany", "Qatar",
-                                           "Bahrain", "Tunisia", "Denmark",
-                                           "Belgium", "Morocco",
-                                           "United States of America", "Egypt",
-                                           "Croatia"))
+  data.table::setDT(countrycode::codelist)[,.(country = country.name.en, country.name.de, country.name.fr,lower_ggflag = iso2c, team = ioc, flag = unicode.symbol)
+  ][, lower_ggflag := tolower(lower_ggflag)]
 
 usethis::use_data(complete_team_names, complete_team_names, overwrite = TRUE)
