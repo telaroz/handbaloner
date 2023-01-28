@@ -90,13 +90,16 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   # Agregar si 1ero o 2do tiempo o tiempos extra
 
-  pbp[tiempo < '59:59' &  stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper'),
+  pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
+                            !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back'),
       mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
 
-  pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '60:00',
+  pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
+        !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back') & tiempo == '60:00',
       mitad := 3]
 
-  pbp[stringr::str_detect(accion_casa, 'Goalkeeper') & stringr::str_detect(accion_visita, 'Goalkeeper') & tiempo == '70:00',
+  pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
+        !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back') & tiempo == '70:00',
       mitad := 4]
 
 
