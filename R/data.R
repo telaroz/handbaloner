@@ -15,3 +15,20 @@ usethis::use_data(xg_egipto21, xg_egipto21, overwrite = TRUE)
 #' }
 #' @source \url{'https://raw.githubusercontent.com/telaroz/egipto21/main/partidos_pbp_egipto2021.csv'}
 "xg_egipto21"
+
+
+#' Complete names
+#'
+#'
+#' @format A data frame with 32 rows and 2 variables:
+#' \describe{
+#'   \item{team}{Short Name}
+#'   \item{complete_name}{Complete Name}
+#'   ...
+#' }
+"complete_team_names"
+complete_team_names <-
+  data.table::setDT(countrycode::codelist)[,.(country = country.name.en, country.name.de, country.name.fr,lower_ggflag = iso2c, team = ioc, flag = unicode.symbol)
+  ][, lower_ggflag := tolower(lower_ggflag)]
+
+usethis::use_data(complete_team_names, complete_team_names, overwrite = TRUE)

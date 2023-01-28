@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Valery Zúñiga Kondrashov \email{telaroz@gmail.com}
 
+Authors:
+\itemize{
+  \item Philippe Heymans Smith \email{pheymanss@gmail.com}
+}
+
 }
 \keyword{internal}
