@@ -91,15 +91,15 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   # Agregar si 1ero o 2do tiempo o tiempos extra
 
   pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
-                            !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back'),
+                            !stringr::str_detect(accion_casa, 'for') & !stringr::str_detect(accion_visita, 'for'),
       mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
 
   pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
-        !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back') & tiempo == '60:00',
+        !stringr::str_detect(accion_casa, 'for') & !stringr::str_detect(accion_visita, 'for') & tiempo == '60:00',
       mitad := 3]
 
   pbp[(stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
-        !stringr::str_detect(accion_casa, 'Goalkeeper back') & !stringr::str_detect(accion_visita, 'Goalkeeper back') & tiempo == '70:00',
+        !stringr::str_detect(accion_casa, 'for') & !stringr::str_detect(accion_visita, 'for') & tiempo == '70:00',
       mitad := 4]
 
 
@@ -330,10 +330,28 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   pos[numero_de_posesion == numero_de_primera_posesion_segundo_tiempo,
       inicio_posesion := '30:00']
 
-  pos[numero_de_posesion == max(numero_de_posesion), fin_posesion :=
-        data.table::fcase(max(mitad) == 2,'60:00',
-                          max(mitad) == 3, '70:00',
-                          max(mitad) == 4, '80:00')]
+  numero_de_primera_posesion_tercer_tiempo <- pos[mitad == 3][1]$numero_de_posesion
+
+  pos[numero_de_posesion == numero_de_primera_posesion_tercer_tiempo,
+      inicio_posesion := '60:00']
+
+  numero_de_primera_posesion_cuarto_tiempo <- pos[mitad == 4][1]$numero_de_posesion
+
+  pos[numero_de_posesion == numero_de_primera_posesion_cuarto_tiempo,
+      inicio_posesion := '70:00']
+
+  pos[, maxima_posesion_mitad := max(numero_de_posesion), mitad]
+
+  pos[numero_de_posesion == maxima_posesion_mitad, fin_posesion :=
+        data.table::fcase(mitad == 1, '30:00',
+                          mitad == 2, '60:00',
+                          mitad == 3, '70:00',
+                          mitad == 4, '80:00')]
+
+  # pos[numero_de_posesion == max(numero_de_posesion), fin_posesion :=
+  #       data.table::fcase(max(mitad) == 2,'60:00',
+  #                         max(mitad) == 3, '70:00',
+  #                         max(mitad) == 4, '80:00')]
 
   pos[, c('lt', 'nlt', 'numero_posesion_anterior') := NULL]
 
@@ -383,13 +401,16 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   listo[, equipos := paste(equipo_casa, equipo_visita, sep = " - ")]
 
+  listo[, duracion_posesion := as.numeric(lubridate::ms(fin_posesion)) -
+         as.numeric(lubridate::ms(inicio_posesion))]
+
   listo <- listo[accion != '', .(id_partido = id, equipos, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
                                  portero, portero_rival, asistencia_numero, gol_numero,
                                  tiro_numero, gol, velocidad_tiro, posicion_marco, posicion_tiro, post, saved,
                                  posicion_marco_vertical, posicion_marco_horizontal, numero_causa_7m,
                                  numero_recibe_7m, turnover, falta_tecnica, robo, suspension, es_casa, cantidad_suspendidos,
                                  sin_portero, cantidad_jugadores_campo = cantidad_jugadores_campo_real, posesion,
-                                 numero_posesion = numero_de_posesion, inicio_posesion, fin_posesion, marcador, diferencia)]
+                                 numero_posesion = numero_de_posesion, inicio_posesion, fin_posesion, marcador, diferencia, duracion_posesion)]
 
   if(!columns_in_spanish) {
 
@@ -403,7 +424,7 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
                         "steal", "suspension", "is_home",  "number_suspended",
                         "no_goalkeeper", "number_court_players", "possession",
                         "number_of_possession", "start_of_possession",
-                        "end_of_possession", "score", "lead")
+                        "end_of_possession", "score", "lead", "possession_length")
   }
 
   return(listo)
