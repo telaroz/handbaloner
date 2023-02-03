@@ -9,12 +9,22 @@
 #'
 #' @examples generate_tidy_pbp('01pbp.pdf')
 generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
-                              columns_in_spanish = FALSE){
+                              match_id_pattern = 'Match No: ',
+                              differentiate_gender = FALSE,
+                              columns_in_spanish = FALSE,
+                              gender = "M"){ # or "W"
   texto <- pdftools::pdf_text(input) %>%
     readr::read_lines()
 
-  numero_partido_ext <- texto[stringr::str_detect(texto, 'Match No: ')][1] %>%
-    stringr::str_extract('Match No: \\d+')  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
+  if (differentiate_gender) {
+    gender <- data.table::fifelse(stringr::str_extract(texto, "Masculino|Femenino") %>%
+                                    table() %>%
+                                    names() == "Masculino", "M", "W")
+
+  }
+
+  numero_partido_ext <- texto[stringr::str_detect(texto, match_id_pattern)][1] %>%
+    stringr::str_extract(paste0(match_id_pattern, '\\d+'))  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
     stringr::str_extract('\\d+') %>%
     as.numeric()
   # 1.1 - Limpieza de jugadores ---------------------------------------------
@@ -404,7 +414,9 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   listo[, duracion_posesion := as.numeric(lubridate::ms(fin_posesion)) -
          as.numeric(lubridate::ms(inicio_posesion))]
 
-  listo <- listo[accion != '', .(id_partido = id, equipos, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
+  listo[, genero := gender]
+
+  listo <- listo[accion != '', .(id_partido = id, equipos, genero, tiempo, tiempo_numerico, mitad, accion, numero, equipo,
                                  portero, portero_rival, asistencia_numero, gol_numero,
                                  tiro_numero, gol, velocidad_tiro, posicion_marco, posicion_tiro, post, saved,
                                  posicion_marco_vertical, posicion_marco_horizontal, numero_causa_7m,
@@ -414,7 +426,7 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   if(!columns_in_spanish) {
 
-    colnames(listo) <- c("match_id", "teams", "time", "numeric_time", "half", "action",
+    colnames(listo) <- c("match_id", "teams", "gender","time", "numeric_time", "half", "action",
                          "number",  "team", "goalkeeper", "opponent_goalkeeper",
                          "assist_number", "goal_number", "shot_number", "goal",
                          "shot_speed", "in_goal_position", "shot_position",
@@ -439,13 +451,13 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 #' @export
 #'
 #' @examples players_and_coaches('01pbp.pdf')
-players_and_coaches <- function(input, columns_in_spanish = FALSE){
+players_and_coaches <- function(input, match_id_pattern = 'Match No: ', columns_in_spanish = FALSE){
 
   texto <- pdftools::pdf_text(input) %>%
     readr::read_lines()
 
-  numero_partido_ext <- texto[stringr::str_detect(texto, 'Match No: ')][1] %>%
-    stringr::str_extract('Match No: \\d+')  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
+  numero_partido_ext <- texto[stringr::str_detect(texto, match_id_pattern)][1] %>%
+    stringr::str_extract(paste0(match_id_pattern,'\\d+'))  %>% # Esto es para asegurarnos que verdaderamente saquemos el número del partido y no otras cosas.
     stringr::str_extract('\\d+') %>%
     as.numeric()
   # 1.1 - Limpieza de jugadores ---------------------------------------------
