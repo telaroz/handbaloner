@@ -265,8 +265,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   }
 
-  casa <- func_tidy_pbp_por_equipo(tabla = pbpc, casa = TRUE, nombre_equipo = nombres_equipos[1])
-  visita <- func_tidy_pbp_por_equipo(tabla = pbpv, casa = FALSE, nombre_equipo = nombres_equipos[2])
+  casa <- func_tidy_pbp_por_equipo(tabla = pbpc, casa = TRUE,
+                                   nombre_equipo = nombres_equipos[1])
+  visita <- func_tidy_pbp_por_equipo(tabla = pbpv, casa = FALSE,
+                                     nombre_equipo = nombres_equipos[2])
 
   casa[is.na(gol), gol := 0]
   visita[is.na(gol), gol := 0]
