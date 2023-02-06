@@ -78,7 +78,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
       pbp_sucio1 <- pbp_sucio1 %>%
         purrr::walk(~ .x[, V4 := NULL][, V9 := NULL]) %>%
         data.table::rbindlist() %>%
-        data.table::setnames(colnames(.), c('tiempo', 'numero_casa', 'accion_casa', 'marcador', 'ventaja_casa', 'numero_visita', 'accion_visita'))
+        data.table::setnames(colnames(.), c('tiempo', 'numero_casa',
+                                            'accion_casa', 'marcador',
+                                            'ventaja_casa', 'numero_visita',
+                                            'accion_visita'))
 
     }else{
       pbp_sucio1 <- NULL
