@@ -283,8 +283,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   casa[, acumulada_goles_visita := visita$acumulada_goles_visita]
   visita[, acumulada_goles_casa := casa$acumulada_goles_casa]
 
-  casa[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita, sep = ' - ')]
-  visita[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita, sep = ' - ')]
+  casa[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita,
+                           sep = ' - ')]
+  visita[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita,
+                             sep = ' - ')]
 
 
   final <- rbind(casa, visita)
