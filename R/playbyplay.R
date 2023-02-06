@@ -302,7 +302,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   pos <- final
 
-  posible_cambio_posesion <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', 'Steal', 'Block','saved')
+  posible_cambio_posesion <- c('\\bGoal\\b', 'Technical',
+                               'Turnover', 'missed', 'Shot', 'Steal', 'Block','saved')
 
   posible_cambio_posesion_para_secuencias <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', 'saved')
 
