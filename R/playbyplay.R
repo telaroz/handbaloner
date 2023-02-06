@@ -243,7 +243,9 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
       auxiliar <- tabla[tabla, .(list(no_jugada)), on = .(tiempo_numerico > inicia_suspension, tiempo_numerico <= termina_suspension), by = .EACHI]
 
-      cantidad_jugadores_menos <- (auxiliar[!is.na(V1)]$V1 %>% unlist() %>% data.table::data.table(no_jugada = .))[,.N,no_jugada]
+      cantidad_jugadores_menos <- (auxiliar[!is.na(V1)]$V1 %>% unlist() %>%
+                                     data.table::data.table(no_jugada = .)
+                                   )[,.N,no_jugada]
 
       tabla[cantidad_jugadores_menos, cantidad_suspendidos := -i.N, on = 'no_jugada']
       tabla[is.na(cantidad_suspendidos), cantidad_suspendidos := 0]
