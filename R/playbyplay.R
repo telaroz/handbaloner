@@ -131,7 +131,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   equipos[, V1 := V1[1L] , cumsum(V1 != '')]
 
-  data.table::rbindlist(list(equipos[,.(V1, V2, V4, V6, V8)], equipos[,.(V1, V3, V5, V7, V9)]))
+  data.table::rbindlist(list(equipos[,.(V1, V2, V4, V6, V8)],
+                             equipos[,.(V1, V3, V5, V7, V9)]))
 
   tidy_equipo <- data.table::melt(equipos, id.vars = c('V1'),
                                   measure.vars = c('V2', 'V4', 'V6', 'V8'),
