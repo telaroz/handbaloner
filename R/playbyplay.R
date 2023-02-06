@@ -51,7 +51,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
       purrr::map_if( ~ ncol(.) == 6, ~.[, V7 := '']) %>%
       purrr::map_if(~ ncol(.) == 8, ~ .[, V7 := paste0(V7, V8)]) %>%
       purrr::map_df(~ .x[,1:7]) %>%
-      data.table::setnames(colnames(.), c('tiempo', 'numero_casa', 'accion_casa', 'marcador', 'ventaja_casa', 'numero_visita', 'accion_visita'))
+      data.table::setnames(colnames(.), c('tiempo', 'numero_casa',
+                                          'accion_casa', 'marcador',
+                                          'ventaja_casa', 'numero_visita',
+                                          'accion_visita'))
 
   }else{
     pbp_limpio <- NULL
