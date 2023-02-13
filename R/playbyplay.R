@@ -166,7 +166,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   func_tidy_pbp_por_equipo <- function(tabla,  casa = TRUE, nombre_equipo, numero_partido = numero_partido_ext){
 
-    tabla[stringr::str_detect(tiempo, '0:00|30:00') & stringr::str_detect(accion, 'Goalkeeper')]
+    tabla[stringr::str_detect(tiempo, '0:00|30:00') &
+            stringr::str_detect(accion, 'Goalkeeper')]
     tabla[, accion := stringr::str_squish(accion)]
 
     tabla <- tabla[stringr::str_detect(tiempo, '\\d')]
