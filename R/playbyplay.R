@@ -111,7 +111,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   # Agregar si 1ero o 2do tiempo o tiempos extra
 
-  pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
+  pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') |
+                            stringr::str_detect(accion_visita, 'Goalkeeper')) &
                             !stringr::str_detect(accion_casa, 'for') & !stringr::str_detect(accion_visita, 'for'),
       mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
 
