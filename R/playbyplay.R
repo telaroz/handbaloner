@@ -17,7 +17,11 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
     readr::read_lines()
 
   if (differentiate_gender) {
-    gender <- data.table::fifelse(any(stringr::str_extract(texto, "Masculino|Femenino") == "Masculino") == TRUE , "M", "W")
+    gender <- data.table::fifelse(any(
+      stringr::str_extract(texto,
+                           "Masculino|Femenino") == "Masculino") == TRUE ,
+      "M",
+      "W")
 
   }
 
@@ -47,7 +51,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
       purrr::map_if( ~ ncol(.) == 6, ~.[, V7 := '']) %>%
       purrr::map_if(~ ncol(.) == 8, ~ .[, V7 := paste0(V7, V8)]) %>%
       purrr::map_df(~ .x[,1:7]) %>%
-      data.table::setnames(colnames(.), c('tiempo', 'numero_casa', 'accion_casa', 'marcador', 'ventaja_casa', 'numero_visita', 'accion_visita'))
+      data.table::setnames(colnames(.), c('tiempo', 'numero_casa',
+                                          'accion_casa', 'marcador',
+                                          'ventaja_casa', 'numero_visita',
+                                          'accion_visita'))
 
   }else{
     pbp_limpio <- NULL
@@ -71,7 +78,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
       pbp_sucio1 <- pbp_sucio1 %>%
         purrr::walk(~ .x[, V4 := NULL][, V9 := NULL]) %>%
         data.table::rbindlist() %>%
-        data.table::setnames(colnames(.), c('tiempo', 'numero_casa', 'accion_casa', 'marcador', 'ventaja_casa', 'numero_visita', 'accion_visita'))
+        data.table::setnames(colnames(.), c('tiempo', 'numero_casa',
+                                            'accion_casa', 'marcador',
+                                            'ventaja_casa', 'numero_visita',
+                                            'accion_visita'))
 
     }else{
       pbp_sucio1 <- NULL
@@ -84,7 +94,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
       pbp_sucio2 <- pbp_sucio2 %>%
         purrr::walk(~ .x[, V3 := paste0(V3,V4)][, V4 := NULL]) %>%
         purrr::map_df(~ .x[,1:7]) %>%
-        data.table::setnames(colnames(.), c('tiempo', 'numero_casa', 'accion_casa', 'marcador', 'ventaja_casa', 'numero_visita', 'accion_visita'))
+        data.table::setnames(colnames(.), c('tiempo', 'numero_casa',
+                                            'accion_casa', 'marcador',
+                                            'ventaja_casa', 'numero_visita',
+                                            'accion_visita'))
 
     }else{
       pbp_sucio2 <- NULL
@@ -98,7 +111,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   # Agregar si 1ero o 2do tiempo o tiempos extra
 
-  pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') | stringr::str_detect(accion_visita, 'Goalkeeper')) &
+  pbp[tiempo < '59:59' & (stringr::str_detect(accion_casa, 'Goalkeeper') |
+                            stringr::str_detect(accion_visita, 'Goalkeeper')) &
                             !stringr::str_detect(accion_casa, 'for') & !stringr::str_detect(accion_visita, 'for'),
       mitad := data.table::fifelse(tiempo == '0:00', 1, 2)]
 
@@ -118,7 +132,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   equipos[, V1 := V1[1L] , cumsum(V1 != '')]
 
-  data.table::rbindlist(list(equipos[,.(V1, V2, V4, V6, V8)], equipos[,.(V1, V3, V5, V7, V9)]))
+  data.table::rbindlist(list(equipos[,.(V1, V2, V4, V6, V8)],
+                             equipos[,.(V1, V3, V5, V7, V9)]))
 
   tidy_equipo <- data.table::melt(equipos, id.vars = c('V1'),
                                   measure.vars = c('V2', 'V4', 'V6', 'V8'),
@@ -151,7 +166,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   func_tidy_pbp_por_equipo <- function(tabla,  casa = TRUE, nombre_equipo, numero_partido = numero_partido_ext){
 
-    tabla[stringr::str_detect(tiempo, '0:00|30:00') & stringr::str_detect(accion, 'Goalkeeper')]
+    tabla[stringr::str_detect(tiempo, '0:00|30:00') &
+            stringr::str_detect(accion, 'Goalkeeper')]
     tabla[, accion := stringr::str_squish(accion)]
 
     tabla <- tabla[stringr::str_detect(tiempo, '\\d')]
@@ -229,7 +245,9 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
       auxiliar <- tabla[tabla, .(list(no_jugada)), on = .(tiempo_numerico > inicia_suspension, tiempo_numerico <= termina_suspension), by = .EACHI]
 
-      cantidad_jugadores_menos <- (auxiliar[!is.na(V1)]$V1 %>% unlist() %>% data.table::data.table(no_jugada = .))[,.N,no_jugada]
+      cantidad_jugadores_menos <- (auxiliar[!is.na(V1)]$V1 %>% unlist() %>%
+                                     data.table::data.table(no_jugada = .)
+                                   )[,.N,no_jugada]
 
       tabla[cantidad_jugadores_menos, cantidad_suspendidos := -i.N, on = 'no_jugada']
       tabla[is.na(cantidad_suspendidos), cantidad_suspendidos := 0]
@@ -249,8 +267,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   }
 
-  casa <- func_tidy_pbp_por_equipo(tabla = pbpc, casa = TRUE, nombre_equipo = nombres_equipos[1])
-  visita <- func_tidy_pbp_por_equipo(tabla = pbpv, casa = FALSE, nombre_equipo = nombres_equipos[2])
+  casa <- func_tidy_pbp_por_equipo(tabla = pbpc, casa = TRUE,
+                                   nombre_equipo = nombres_equipos[1])
+  visita <- func_tidy_pbp_por_equipo(tabla = pbpv, casa = FALSE,
+                                     nombre_equipo = nombres_equipos[2])
 
   casa[is.na(gol), gol := 0]
   visita[is.na(gol), gol := 0]
@@ -265,8 +285,10 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   casa[, acumulada_goles_visita := visita$acumulada_goles_visita]
   visita[, acumulada_goles_casa := casa$acumulada_goles_casa]
 
-  casa[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita, sep = ' - ')]
-  visita[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita, sep = ' - ')]
+  casa[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita,
+                           sep = ' - ')]
+  visita[, marcador := paste(acumulada_goles_casa, acumulada_goles_visita,
+                             sep = ' - ')]
 
 
   final <- rbind(casa, visita)
@@ -282,7 +304,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   pos <- final
 
-  posible_cambio_posesion <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', 'Steal', 'Block','saved')
+  posible_cambio_posesion <- c('\\bGoal\\b', 'Technical',
+                               'Turnover', 'missed', 'Shot', 'Steal', 'Block','saved')
 
   posible_cambio_posesion_para_secuencias <- c('\\bGoal\\b', 'Technical', 'Turnover', 'missed', 'Shot', 'saved')
 
