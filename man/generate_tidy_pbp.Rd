@@ -7,7 +7,10 @@
 generate_tidy_pbp(
   input,
   two_min = "2-minutes suspension",
-  columns_in_spanish = FALSE
+  match_id_pattern = "Match No: ",
+  differentiate_gender = FALSE,
+  columns_in_spanish = FALSE,
+  gender = "M"
 )
 }
 \arguments{

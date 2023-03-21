@@ -4,7 +4,11 @@
 \alias{players_and_coaches}
 \title{Players and coaches}
 \usage{
-players_and_coaches(input, columns_in_spanish = FALSE)
+players_and_coaches(
+  input,
+  match_id_pattern = "Match No: ",
+  columns_in_spanish = FALSE
+)
 }
 \arguments{
 \item{input}{Directory where the pbp is located}
