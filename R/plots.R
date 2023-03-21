@@ -155,7 +155,8 @@ draw_goal <- function(color = "#b90d16"){
     ggplot2::geom_segment(ggplot2::aes(x = -2, xend = 2,
                                        y = -1, yend = -1),
                           size = 2.5) +
-    ggplot2::theme_void()
+    ggplot2::theme_void() +
+    ggplot2::coord_fixed()
 
 }
 
