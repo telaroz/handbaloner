@@ -103,7 +103,61 @@ half_court <- function(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
   return(plot)
 }
 
+#' Draw the goal
+#'
+#' @param color Colour of the goal. By default red.
+#'
+#' @return
+#' @export
+#'
+#' @examples draw_goal("blue")
+draw_goal <- function(color = "#b90d16"){
 
+  library(ggplot2)
+
+  goal_width <- 0.08
+  contour_size <- 1.1
+
+  coloured_dimensions <-
+    data.frame(xmin = c(seq(from = -1.5, to = 1.5 - 0.2,
+                            by = 0.4) ,
+                        rep(-1.5 - goal_width, 5) + 0.004,
+                        rep(1.5, 5) + 0.004,
+                        c(-1.5 - goal_width + 0.004, 1.5)),
+               xmax = c(seq(from = -1.5 + 0.2, to = 1.5, by = 0.4),
+                        rep(-1.5, 5) - 0.002,
+                        rep(1.5 + goal_width, 5) - 0.002,
+                        c(-1.5, 1.5 + goal_width - 0.002)),
+               ymin = c(rep(1, 8) + 0.002,
+                        seq(from = -1 + 0.2, to = 1, by = 0.4),
+                        seq(from = -1 + 0.2, to = 1, by = 0.4),
+                        c(1, 1)),
+               ymax = c(rep(1 + goal_width, 8) - 0.004,
+                        seq(from = -1 + 0.2 + 0.2, to = 1, by = 0.4),
+                        seq(from = -1 + 0.2 + 0.2, to = 1, by = 0.4),
+                        c(1 + goal_width - 0.004, 1 +
+                            goal_width - 0.004)))
+  ggplot2::ggplot() +
+    ggplot2::geom_rect(data = coloured_dimensions,
+                       ggplot2::aes(xmin = xmin ,
+                                    xmax = xmax,
+                                    ymin = ymin,
+                                    ymax = ymax),
+                       fill = color) +
+    ggplot2::geom_line(ggplot2::aes(x = c(-1.5, -1.5, 1.5, 1.5),
+                                    y = c(-1, 1, 1, -1)),
+                       linewidth = contour_size) +
+    ggplot2::geom_line(aes(x = c(-1.5 - goal_width, -1.5 - goal_width,
+                                 1.5 + goal_width, 1.5 + goal_width),
+                           y = c(-1, 1 + goal_width,
+                                 1 + goal_width, -1)),
+                       linewidth = contour_size) +
+    ggplot2::geom_segment(ggplot2::aes(x = -2, xend = 2,
+                                       y = -1, yend = -1),
+                          size = 2.5) +
+    ggplot2::theme_void()
+
+}
 
 #' Generate a pace plot for each 5-minutes inverval for 2 teams
 #' @param pbp_data PBP data
