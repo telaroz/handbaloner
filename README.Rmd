@@ -48,7 +48,7 @@ court(vertical = TRUE, flip = TRUE, court_color = "orange",
       area_color = "#3431A2", lines_color = "black")
 ```
 
-As the plots are generated with ggplot, we can describe the colourse with their
+As the plots are generated with ggplot, we can describe the colours with their
 HEX code, rgb, number or by its name in english; see: [use of colours in ggplot2](https://r-graph-gallery.com/ggplot2-color.html)
 
 We can also draw half a court
@@ -74,19 +74,51 @@ red if the shots were goal or not.
 
 
 ```{r}
-tiros <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
+shots <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
                        gol = c(1, 0, 1, 1, 0))
 
-dplyr::mutate(tiros, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
+dplyr::mutate(shots, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
 
 ```
 
 ```{r court with shots}
 court() +
-  ggplot2::geom_point(data = tiros, ggplot2::aes(x, y),
-                      color = ifelse(tiros$gol == 1, 'Green', 'Red'),
+  ggplot2::geom_point(data = shots, ggplot2::aes(x, y),
+                      color = ifelse(shots$gol == 1, 'Green', 'Red'),
                       size = 4)
+```
+
+## Goal visualization examples
+
+In this example, we can draw a handball goal.
+
+```{r basic example goal}
+library(handbaloner)
+
+draw_goal()
+```
+
+We can change the colour of the goal. It is red by default.
+
+```{r color change}
+library(handbaloner)
+
+draw_goal("blue")
+```
+
+Now, let's draw some shots, just as we did with the court:
+
+```{r goal with shots}
+goal_shots <- dplyr::tibble(x = c(-2, -1, 0.5, 0.7, 1.4),
+                       y = c(0.2, 2, -0.5, 0.3, 0.9),
+                       gol = c(0, 0, 1, 1, 1))
+
+draw_goal() +
+  ggplot2::geom_point(data = goal_shots, ggplot2::aes(x, y),
+                      color = ifelse(goal_shots$gol == 1, 'Green', 'Red'),
+                      size = 4)
+
 ```
 
 ## Generate Play by Play tidy data from IHF files
@@ -107,6 +139,6 @@ scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men03
 Now, use the `generate_tidy_pbp` to generate a `data.frame` in a tidy format. 
 
 ```{r generate tidy pbp}
-generate_tidy_pbp("pol_swe/02PBP.PDF")
+generate_tidy_pbp("pol_swe/01PBP.PDF")
 ```
 

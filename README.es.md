@@ -96,6 +96,44 @@ court() +
 
 <img src="man/figures/README-campo con tiros-1.png" width="100%" />
 
+## Ejemplos de visualización del marco
+
+Con este ejemplo, dibujamos un marco de balonmano en sus dimensiones oficiales.
+
+``` r
+library(handbaloner)
+
+draw_goal()
+```
+
+<img src="man/figures/README-basic example goal-1.png" width="100%" />
+
+Cambiamos el color del marco. Por defecto es rojo
+
+``` r
+library(handbaloner)
+
+draw_goal("blue")
+```
+
+<img src="man/figures/README-color change-1.png" width="100%" />
+
+Ahora, dibujemos algunos tiros, como hicimos con el campo completo
+
+``` r
+tiros_a_gol <- dplyr::tibble(x = c(-2, -1, 0.5, 0.7, 1.4),
+                       y = c(0.2, 2, -0.5, 0.3, 0.9),
+                       gol = c(0, 0, 1, 1, 1))
+
+draw_goal() +
+  ggplot2::geom_point(data = tiros_a_gol, ggplot2::aes(x, y),
+                      color = ifelse(tiros_a_gol$gol == 1, 'Green', 'Red'),
+                      size = 4)
+```
+
+<img src="man/figures/README-goal with shots-1.png" width="100%" />
+
+
 ## Generar Play by Play en formato tidy desde datos de IHF
 
 Primero, se necesita descargar el archivo PDF con el PBP. Para esta tarea, se 
