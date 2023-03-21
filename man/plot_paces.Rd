@@ -14,7 +14,7 @@ plot_paces(pbp_data, chosen_match_id, move_explanation_right = 0)
 \item{move_explanation_right}{Explanation on what pace is can be moved to the rigth}
 }
 \value{
-
+plot with the paces
 }
 \description{
 Generate a pace plot for each 5-minutes inverval for 2 teams

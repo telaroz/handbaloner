@@ -24,9 +24,6 @@ add_bands(
 
 \item{number_bands}{Whether or not to add numbering to the bands.}
 }
-\value{
-
-}
 \description{
 Assign a band to the values of a numerical column
 }

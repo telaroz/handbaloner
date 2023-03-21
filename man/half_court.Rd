@@ -24,7 +24,7 @@ half_court(
 \item{lines_color}{Color de las líneas de campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)}
 }
 \value{
-Un gráfico completo con los colores y orientación deseada
+a completeUn gráfico completo con los colores y orientación deseada
 }
 \description{
 Creación de medio campo verticalmente (arriba)

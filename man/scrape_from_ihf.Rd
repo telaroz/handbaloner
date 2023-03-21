@@ -13,9 +13,6 @@ scrape_from_ihf(link, folder, from_archive = FALSE)
 
 \item{from_archive}{Whether the pdfs are in the archive.ihf.info site}
 }
-\value{
-
-}
 \description{
 Function to download pdfs of World Championships in the new IHF site
 }

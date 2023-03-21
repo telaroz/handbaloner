@@ -64,7 +64,7 @@ court <- function(vertical = FALSE, flip = FALSE, court_color = '#1871c9',
 #' @param area_color Color del área. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
 #' @param lines_color Color de las líneas de campo. Ver las opciones de ggplot2 (Puede ser dado en HEX o colores)
 #'
-#' @return Un gráfico completo con los colores y orientación deseada
+#' @return a completeUn gráfico completo con los colores y orientación deseada
 #' @export
 #'
 #' @examples
@@ -107,7 +107,7 @@ half_court <- function(vertical = TRUE, flip = FALSE, court_color = '#1871c9',
 #'
 #' @param color Colour of the goal. By default red.
 #'
-#' @return
+#' @return ggplot plot showing a goal
 #' @export
 #'
 #' @examples draw_goal("blue")
@@ -164,7 +164,7 @@ draw_goal <- function(color = "#b90d16"){
 #' @param chosen_match_id Which match_id you want to plot
 #' @param move_explanation_right Explanation on what pace is can be moved to the rigth
 #'
-#' @return
+#' @return plot with the paces
 #' @export
 #'
 #' @examples plot_paces(pbp_data, 1)
