@@ -104,7 +104,7 @@ library(handbaloner)
 draw_goal()
 ```
 
-<img src="man/figures/README-basic example goal-1.png" width="100%" />
+<img src="man/figures/README-basic example goal-1.png" width="70%" />
 
 We can change the colour of the goal. It is red by default.
 
@@ -114,7 +114,7 @@ library(handbaloner)
 draw_goal("blue")
 ```
 
-<img src="man/figures/README-color change-1.png" width="100%" />
+<img src="man/figures/README-color change-1.png" width="70%" />
 
 Now, let’s draw some shots, just as we did with the court:
 

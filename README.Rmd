@@ -93,7 +93,7 @@ court() +
 
 In this example, we can draw a handball goal.
 
-```{r basic example goal}
+```{r basic example goal, out.width = '70%'}
 library(handbaloner)
 
 draw_goal()
@@ -101,7 +101,7 @@ draw_goal()
 
 We can change the colour of the goal. It is red by default.
 
-```{r color change}
+```{r color change, out.width = '70%'}
 library(handbaloner)
 
 draw_goal("blue")
