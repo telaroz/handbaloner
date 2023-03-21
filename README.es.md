@@ -106,7 +106,7 @@ library(handbaloner)
 draw_goal()
 ```
 
-<img src="man/figures/README-basic example goal-1.png" width="100%" />
+<img src="man/figures/README-basic example goal-1.png" width="70%" />
 
 Cambiamos el color del marco. Por defecto es rojo
 
@@ -116,7 +116,7 @@ library(handbaloner)
 draw_goal("blue")
 ```
 
-<img src="man/figures/README-color change-1.png" width="100%" />
+<img src="man/figures/README-color change-1.png" width="70%" />
 
 Ahora, dibujemos algunos tiros, como hicimos con el campo completo
 
