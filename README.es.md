@@ -29,7 +29,7 @@ library(handbaloner)
 court()
 ```
 
-<img src="man/figures/README-ejemplo basico-1.png" width="100%" />
+<img src="man/figures/README-basic_example-1.png" width="100%" />
 
 Podemos cambiar los colores, rotar verticalmente y en espejo con sus
 parámetros.
@@ -39,7 +39,7 @@ court(vertical = TRUE, flip = TRUE, court_color = "orange",
       area_color = "#3431A2", lines_color = "black")
 ```
 
-<img src="man/figures/README-ejemplo con colores-1.png" width="100%" />
+<img src="man/figures/README-example_with_colours-1.png" width="100%" />
 
 Ya que los gráficos están hechos en ggplot, la manera de describir los
 colores puede ser en código HEX, rgb, número o por su nombre en inglés;
@@ -54,7 +54,7 @@ half_court(vertical = TRUE, court_color = colors()[36],
       lines_color = "yellow")
 ```
 
-<img src="man/figures/README-ejemplo medio campo-1.png" width="100%" />
+<img src="man/figures/README-half_court_example-1.png" width="100%" />
 
 Otra función útil es `distance_to_goal` que mide la distancia de un
 punto del campo al marco más cercano, según sus coordenadas (\[-40, 40\]
@@ -94,7 +94,7 @@ court() +
                       size = 4)
 ```
 
-<img src="man/figures/README-campo con tiros-1.png" width="100%" />
+<img src="man/figures/README-court_with_shots-1.png" width="100%" />
 
 ## Ejemplos de visualización del marco
 
@@ -106,7 +106,7 @@ library(handbaloner)
 draw_goal()
 ```
 
-<img src="man/figures/README-basic example goal-1.png" width="70%" />
+<img src="man/figures/README-basic_example_goal-1.png" width="70%" />
 
 Cambiamos el color del marco. Por defecto es rojo
 
@@ -116,7 +116,7 @@ library(handbaloner)
 draw_goal("blue")
 ```
 
-<img src="man/figures/README-color change-1.png" width="70%" />
+<img src="man/figures/README-color_change-1.png" width="70%" />
 
 Ahora, dibujemos algunos tiros, como hicimos con el campo completo
 
@@ -131,7 +131,7 @@ draw_goal() +
                       size = 4)
 ```
 
-<img src="man/figures/README-goal with shots-1.png" width="100%" />
+<img src="man/figures/README-goal_with_shots-1.png" width="100%" />
 
 
 ## Generar Play by Play en formato tidy desde datos de IHF

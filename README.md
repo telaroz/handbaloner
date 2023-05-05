@@ -6,7 +6,7 @@
 - Documentación en [español](README.es.md) <!-- badges: start -->
   <!-- badges: end -->
 
-The `handbaloner` packages has useful function for the visualization of
+The `handbaloner` package has useful function for the visualization of
 handball data.
 
 ## Package installation
@@ -29,7 +29,7 @@ library(handbaloner)
 court()
 ```
 
-<img src="man/figures/README-basic example-1.png" width="100%" />
+<img src="man/figures/README-basic_example-1.png" width="100%" />
 
 We can change the colours, rotate vertically and mirror the court with
 the functions’ parameters
@@ -39,7 +39,7 @@ court(vertical = TRUE, flip = TRUE, court_color = "orange",
       area_color = "#3431A2", lines_color = "black")
 ```
 
-<img src="man/figures/README-example with colours-1.png" width="100%" />
+<img src="man/figures/README-example_with_colours-1.png" width="100%" />
 
 As the plots are generated with ggplot, we can describe the colours with
 their HEX code, rgb, number or by its name in english; see: [use of
@@ -53,7 +53,7 @@ half_court(vertical = TRUE, court_color = colors()[36],
       lines_color = "yellow")
 ```
 
-<img src="man/figures/README-half court example-1.png" width="100%" />
+<img src="man/figures/README-half_court_example-1.png" width="100%" />
 
 Another useful function is `distance_to_goal` which measures the
 distance from a point of the field to its closest goal, given some
@@ -75,7 +75,7 @@ shots <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        gol = c(1, 0, 1, 1, 0))
 
 dplyr::mutate(shots, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
-#> # A tibble: 5 x 4
+#> # A tibble: 5 × 4
 #>       x     y   gol distance_to_goal
 #>   <dbl> <dbl> <dbl>            <dbl>
 #> 1 -13       2     1             7.02
@@ -92,7 +92,7 @@ court() +
                       size = 4)
 ```
 
-<img src="man/figures/README-court with shots-1.png" width="100%" />
+<img src="man/figures/README-court_with_shots-1.png" width="100%" />
 
 ## Goal visualization examples
 
@@ -104,7 +104,7 @@ library(handbaloner)
 draw_goal()
 ```
 
-<img src="man/figures/README-basic example goal-1.png" width="70%" />
+<img src="man/figures/README-basic_example_goal-1.png" width="70%" />
 
 We can change the colour of the goal. It is red by default.
 
@@ -114,7 +114,7 @@ library(handbaloner)
 draw_goal("blue")
 ```
 
-<img src="man/figures/README-color change-1.png" width="70%" />
+<img src="man/figures/README-color_change-1.png" width="70%" />
 
 Now, let’s draw some shots, just as we did with the court:
 
@@ -129,7 +129,7 @@ draw_goal() +
                       size = 4)
 ```
 
-<img src="man/figures/README-goal with shots-1.png" width="100%" />
+<img src="man/figures/README-goal_with_shots-1.png" width="100%" />
 
 ## Generate Play by Play tidy data from IHF files
 
