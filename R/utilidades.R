@@ -127,9 +127,13 @@ add_bands <- function(data,
   # index for the bands
   run <- seq_along(band_cuts)
   if(truncate_in_data_max){
-    band_cuts <- c(band_cuts, max(data[[minutes_column]], na.rm = TRUE) + 1) %>% dq::suniq()
+    band_cuts <- c(band_cuts, max(data[[minutes_column]], na.rm = TRUE) + 1)  |>
+      unique() |>
+      sort()
   }else{
-    band_cuts <- band_cuts %>% dq::suniq()
+    band_cuts <- band_cuts |>
+      unique() |>
+      sort()
   }
   band_length <- length(band_cuts)
 
