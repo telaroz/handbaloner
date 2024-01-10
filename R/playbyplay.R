@@ -411,18 +411,19 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
 
   # Quitar la información de posesiones en la información de quién es el portero
 
-  listo[stringr::str_detect(tiempo, '0:00') & stringr::str_detect(accion, 'Goalkeeper'),
-        ':='(inicio_posesion = NA, fin_posesion = NA,
-             sin_portero = NA, cantidad_jugadores_campo_real = NA)]
-  listo[stringr::str_detect(tiempo, '30:00') & stringr::str_detect(accion, 'Goalkeeper'),
+  listo[stringr::str_detect(tiempo, '0:00') & stringr::str_detect(accion, 'Goalkeeper') & !(stringr::str_detect(accion, 'for')),
         ':='(inicio_posesion = NA, fin_posesion = NA,
              sin_portero = NA, cantidad_jugadores_campo_real = NA)]
 
-  listo[stringr::str_detect(tiempo, '60:00') & stringr::str_detect(accion, 'Goalkeeper'),
+  listo[stringr::str_detect(tiempo, '30:00') & stringr::str_detect(accion, 'Goalkeeper') & !(stringr::str_detect(accion, 'for')),
         ':='(inicio_posesion = NA, fin_posesion = NA,
              sin_portero = NA, cantidad_jugadores_campo_real = NA)]
 
-  listo[stringr::str_detect(tiempo, '70:00') & stringr::str_detect(accion, 'Goalkeeper'),
+  listo[stringr::str_detect(tiempo, '60:00') & stringr::str_detect(accion, 'Goalkeeper') & !(stringr::str_detect(accion, 'for')),
+        ':='(inicio_posesion = NA, fin_posesion = NA,
+             sin_portero = NA, cantidad_jugadores_campo_real = NA)]
+
+  listo[stringr::str_detect(tiempo, '70:00') & stringr::str_detect(accion, 'Goalkeeper') & !(stringr::str_detect(accion, 'for')),
         ':='(inicio_posesion = NA, fin_posesion = NA,
              sin_portero = NA, cantidad_jugadores_campo_real = NA)]
 

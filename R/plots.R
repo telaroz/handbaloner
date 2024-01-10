@@ -293,12 +293,12 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
     ggplot2::scale_y_continuous(breaks = seq(0, maximo_hacia_arriba, by = 5)) +
     ggplot2::scale_fill_manual(values = plot_colours) +
     ggplot2::scale_color_manual(values = plot_colours) +
-    ggplot2::theme(plot.title = element_text(hjust = 0.5, size = 20),
-                   plot.subtitle = element_text(hjust = 1),
-                   panel.grid.major = element_blank(),
-                   panel.grid.minor = element_blank(),
-                   panel.background = element_rect(fill = "#F0EEEF", colour = "black", size = 1)) +
-    ggplot2::guides(colour = guide_legend(title = "Team")) +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 20),
+                   plot.subtitle = ggplot2::element_text(hjust = 1),
+                   panel.grid.major = ggplot2::element_blank(),
+                   panel.grid.minor = ggplot2::element_blank(),
+                   panel.background = ggplot2::element_rect(fill = "#F0EEEF", colour = "black", size = 1)) +
+    ggplot2::guides(colour = ggplot2::guide_legend(title = "Team")) +
     # guides(fill = "none") +
     #scale_country(guide = "possession") +
     ggplot2::labs(title = bquote(atop(bold(.(for_title_part1)), atop(.(for_title_part2), atop(.(for_title_part3)), ""))), # look at: https://stackoverflow.com/questions/35367095/multi-line-ggplot-title-with-different-font-size-face-etc
