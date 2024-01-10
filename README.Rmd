@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The `handbaloner` packages has useful function for the visualization of handball
+The `handbaloner` package has useful function for the visualization of handball
 data. 
 
 ## Package installation
@@ -34,7 +34,7 @@ devtools::install_github("telaroz/handbaloner")
 
 In this example, we can draw a basic court.
 
-```{r basic example}
+```{r basic_example}
 library(handbaloner)
 
 court()
@@ -43,7 +43,7 @@ court()
 We can change the colours, rotate vertically and mirror the court with the 
 functions' parameters
 
-```{r example with colours}
+```{r example_with_colours}
 court(vertical = TRUE, flip = TRUE, court_color = "orange", 
       area_color = "#3431A2", lines_color = "black")
 ```
@@ -53,7 +53,7 @@ HEX code, rgb, number or by its name in english; see: [use of colours in ggplot2
 
 We can also draw half a court
 
-```{r half court example}
+```{r half_court_example}
 half_court(vertical = TRUE, court_color = colors()[36], 
       area_color = rgb(red = 0.2, green = 0.4, blue = 0.6), 
       lines_color = "yellow")
@@ -82,7 +82,7 @@ dplyr::mutate(shots, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal
 
 ```
 
-```{r court with shots}
+```{r court_with_shots}
 court() +
   ggplot2::geom_point(data = shots, ggplot2::aes(x, y),
                       color = ifelse(shots$gol == 1, 'Green', 'Red'),
@@ -93,7 +93,7 @@ court() +
 
 In this example, we can draw a handball goal.
 
-```{r basic example goal, out.width = '70%'}
+```{r basic_example_goal, out.width = '70%'}
 library(handbaloner)
 
 draw_goal()
@@ -101,7 +101,7 @@ draw_goal()
 
 We can change the colour of the goal. It is red by default.
 
-```{r color change, out.width = '70%'}
+```{r color_change, out.width = '70%'}
 library(handbaloner)
 
 draw_goal("blue")
@@ -109,7 +109,7 @@ draw_goal("blue")
 
 Now, let's draw some shots, just as we did with the court:
 
-```{r goal with shots}
+```{r goal_with_shots}
 goal_shots <- dplyr::tibble(x = c(-2, -1, 0.5, 0.7, 1.4),
                        y = c(0.2, 2, -0.5, 0.3, 0.9),
                        gol = c(0, 0, 1, 1, 1))

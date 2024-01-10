@@ -19,7 +19,8 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   if (differentiate_gender) {
     gender <- data.table::fifelse(any(
       stringr::str_extract(texto,
-                           "Masculino|Femenino") == "Masculino") == TRUE ,
+                           "Masculino|Femenino") == "Masculino",
+      na.rm = TRUE) == TRUE ,
       "M",
       "W")
 
