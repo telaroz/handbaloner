@@ -33,7 +33,7 @@ generate_tidy_pbp <- function(input, two_min = '2-minutes suspension',
   # 1.1 - Limpieza de jugadores ---------------------------------------------
 
 
-  tables <- tabulizer::extract_tables(input, method = 'stream')
+  tables <- tabulapdf::extract_tables(input, method = 'stream')
 
 
   equipos <- purrr::keep(tables, ~ .x[2,1] == '') %>%
@@ -487,7 +487,7 @@ players_and_coaches <- function(input, match_id_pattern = 'Match No: ', columns_
 
 
 
-  tables <- tabulizer::extract_tables(input, method = 'stream')
+  tables <- tabulapdf::extract_tables(input, method = 'stream')
 
 
   equipos <- purrr::keep(tables, ~ .x[2,1] == '') %>%
