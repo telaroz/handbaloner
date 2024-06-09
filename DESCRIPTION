@@ -24,5 +24,4 @@ Imports:
     pdftools,
     readr,
     stringr,
-    tabulizer,
     purrr
