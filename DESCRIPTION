@@ -21,3 +21,8 @@ Imports:
     data.table,
     ggplot2,
     rvest,
+    pdftools,
+    readr,
+    stringr,
+    tabulizer,
+    purrr
