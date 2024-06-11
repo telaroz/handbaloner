@@ -243,7 +243,7 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
   for_plot[, max_pace := max(pace), .(minutes)]
   lead_plot <- for_plot[,.(minutes, lead_by_team, possession)] %>% unique()
 
-  scores_at_the_beggining_of_cuts <- for_plot[,.SD[1],
+  scores_at_the_end_of_cuts <- for_plot[,.SD[.N],
                                               by = .(minutes)]
 
   final_score <- for_plot[.N]$score
@@ -253,7 +253,7 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
   for_title_part2 <- glue::glue("Final score: {ex[is_home == TRUE]$possession[1]} {final_score} {ex[is_home == FALSE]$possession[1]}")
   for_title_part3 <- glue::glue("Match id: {ex$match_id[1]}")
 
-  for_subtitle <- glue::glue("Displayed is the score each interval began with.")
+  for_subtitle <- glue::glue("Displayed is the score each interval ended with.")
   for_means <- glue::glue("
                            Mean pace in seconds:
                               {ex[is_home == TRUE]$possession[1]}: {ex[is_home == TRUE]$mean_pace[1]}
@@ -282,7 +282,7 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
     #           aes(y = max(pace_plot$pace) + 2,label = score),
     #           colour = "black",
     #           size = 4) +
-    ggplot2::geom_text(data = scores_at_the_beggining_of_cuts,
+    ggplot2::geom_text(data = scores_at_the_end_of_cuts,
                        ggplot2::aes(y = max_pace + 3,label = score),
                        colour = "black",
                        size = 4) +
