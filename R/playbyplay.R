@@ -25,7 +25,14 @@ generate_tidy_pbp <- function (input, two_min = "2-minutes suspension", match_id
   equipos <- purrr::keep(tables, ~.x[2, 1] == "") %>% data.table::as.data.table()
   nombres_equipos <- unique(equipos$V1[equipos$V1 != ""])
   pbp <- purrr::keep(tables, ~.x[2, 1] != "") %>% purrr::map(~data.table::as.data.table(.x))
-  pbp_limpio <- pbp %>% purrr::keep(~.x[2, V4] == "Score")
+
+
+  pbp <- pbp %>% purrr::map_if(~ncol(.) ==
+                                 3, ~.[, `:=`(V4, "")])
+
+  pbp_limpio <- pbp %>%  purrr::keep(~.x[2, V4] == "Score")
+
+
   if (length(pbp_limpio) != 0) {
     pbp_limpio <- pbp_limpio %>% purrr::map_if(~ncol(.) ==
                                                  6, ~.[, `:=`(V7, "")]) %>%
