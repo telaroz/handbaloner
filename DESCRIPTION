@@ -26,3 +26,6 @@ Imports:
     stringr,
     purrr,
     tabulapdf
+Additional_repositories: https://github.com/jimjam-slam/ggflags
+Suggests:  
+    ggflags

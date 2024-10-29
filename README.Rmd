@@ -30,6 +30,17 @@ with:
 # install.packages("devtools")
 devtools::install_github("telaroz/handbaloner")
 ```
+
+Also, the `plot_paces` function has as dependency the package `ggflags`, which
+is not in CRAN. So in order to use that function, that dependency should be 
+installed (not needed to use the rest of the functions)
+
+``` r
+install.packages("ggflags", repos = c(
+  "https://jimjam-slam.r-universe.dev",
+  "https://cloud.r-project.org"))
+```
+
 ## Court visualization examples
 
 In this example, we can draw a basic court.
