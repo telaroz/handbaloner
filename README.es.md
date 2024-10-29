@@ -17,6 +17,16 @@ La versión de desarrollo se puede instalar desde
 ``` r
 # install.packages("devtools")
 devtools::install_github("telaroz/handbaloner")
+
+Además, la función `plot_paces` tiene como dependencia el paquete `ggflags` que
+no se encuentra en CRAN. Para utilizar estar función, esa dependencia debe
+estar instalada (no es necesaria para el resto de funciones del paquete)
+
+``` r
+install.packages("ggflags", repos = c(
+  "https://jimjam-slam.r-universe.dev",
+  "https://cloud.r-project.org"))
+```
 ```
 
 ## Ejemplos de visualización de campo
