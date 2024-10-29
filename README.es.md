@@ -154,15 +154,15 @@ Para el primer partido del mundial masculino del 2023, se puede descargar los
 PDFs de la siguiente forma:
 
 ``` r
-scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men039s-world-championship-2023/101253/match-center/118895",
-                folder = "pol_swe")
+scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men039s-world-championship-2023-polandsweden/101253/match-center/118963",
+                folder = "ejemplo")
 ```
 
 Ahora, con ayuda de `generate_tidy_pbp` se genera un `data.frame\` en formato 
 tidy.
 
 ``` r
-generate_tidy_pbp("pol_swe/02PBP.PDF")
+generate_tidy_pbp("ejemplo/47PBP.PDF")
 
 #>      match_id   time numeric_time  half
 #>         <num> <char>        <num> <num>

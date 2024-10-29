@@ -143,13 +143,13 @@ download all PDFs as follows:
 
 ```{r download files, eval = FALSE}
 
-scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men039s-world-championship-2023/101253/match-center/118895",
-                folder = "pol_swe")
+scrape_from_ihf(link = "https://www.ihf.info/competitions/men/308/28th-ihf-men039s-world-championship-2023-polandsweden/101253/match-center/118963",
+                folder = "ejemplo")
 ```
 
 Now, use the `generate_tidy_pbp` to generate a `data.frame` in a tidy format. 
 
 ```{r generate tidy pbp}
-generate_tidy_pbp("pol_swe/01PBP.PDF")
+generate_tidy_pbp("ejemplo/47PBP.PDF")
 ```
 
