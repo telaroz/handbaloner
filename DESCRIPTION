@@ -1,7 +1,7 @@
 Package: handbaloner
 Type: Package
 Title: Utilities for handball data analysis.
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: c(person("Valery", "Zúñiga Kondrashov", email = "telaroz@gmail.com",
     role = c("aut", "cre")),
     person("Philippe", "Heymans Smith", email = "pheymanss@gmail.com",
@@ -24,4 +24,5 @@ Imports:
     pdftools,
     readr,
     stringr,
-    purrr
+    purrr,
+    tabulapdf
