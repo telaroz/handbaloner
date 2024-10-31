@@ -168,7 +168,125 @@ tidy <- generate_tidy_pbp("ejemplo/47PBP.PDF")
 
 ``` r
 tidy
+#>      match_id     teams gender   time numeric_time  half
+#>         <num>    <char> <char> <char>        <num> <num>
+#>   1:       47 USA - EGY      M   0:00            0     1
+#>   2:       47 USA - EGY      M   0:00            0     1
+#>   3:       47 USA - EGY      M   0:39           39     1
+#>   4:       47 USA - EGY      M   0:39           39     1
+#>   5:       47 USA - EGY      M   0:47           47     1
+#>  ---                                                    
+#> 169:       47 USA - EGY      M  57:33         3453     2
+#> 170:       47 USA - EGY      M  58:28         3508     2
+#> 171:       47 USA - EGY      M  59:11         3551     2
+#> 172:       47 USA - EGY      M  59:45         3585     2
+#> 173:       47 USA - EGY      M  59:55         3595     2
+#>                                                                action number
+#>                                                                <char> <char>
+#>   1:                                            ROBINSON N Goalkeeper    99 
+#>   2:                                             HENDAWY K Goalkeeper    88 
+#>   3:                                             STROMBERG J Turnover     6 
+#>   4:                                                  HENDAWY K Steal    88 
+#>   5:         SAAD A Goal right wing top left (48 ABDELHAK M), 86 km/h    53 
+#>  ---                                                                        
+#> 169:                            ELDERAA Y Goal centre 9m bottom right    39 
+#> 170: AMITOVIC A Goal centre 9m bottom left (7 CHAN BLANCO A), 79 km/h     5 
+#> 171:                             ELDERAA S Goal centre 9m bottom left    45 
+#> 172:                                   AMITOVIC A Shot centre 9m post     5 
+#> 173:                                    SHEBIB M Technical Fault (FB)    89 
+#>        team goalkeeper opponent_goalkeeper assist_number goal_number
+#>      <char>     <char>              <char>        <char>      <char>
+#>   1:    USA        99                  88           <NA>        <NA>
+#>   2:    EGY        88                  99           <NA>        <NA>
+#>   3:    USA        99                  88           <NA>        <NA>
+#>   4:    EGY        88                  99           <NA>        <NA>
+#>   5:    EGY        88                  99             48         53 
+#>  ---                                                                
+#> 169:    EGY        92                  99           <NA>         39 
+#> 170:    USA        99                  92              7          5 
+#> 171:    EGY        92                  99           <NA>         45 
+#> 172:    USA        99                  92           <NA>        <NA>
+#> 173:    EGY        92                  99           <NA>        <NA>
+#>      shot_number  goal shot_speed in_goal_position shot_position  post saved
+#>           <char> <num>      <num>           <char>        <char> <num> <num>
+#>   1:        <NA>     0         NA             <NA>          <NA>    NA    NA
+#>   2:        <NA>     0         NA             <NA>          <NA>    NA    NA
+#>   3:        <NA>     0         NA             <NA>          <NA>    NA    NA
+#>   4:        <NA>     0         NA             <NA>          <NA>    NA    NA
+#>   5:        <NA>     1         86         top left    right wing    NA    NA
+#>  ---                                                                        
+#> 169:        <NA>     1         NA     bottom right     centre 9m    NA    NA
+#> 170:        <NA>     1         79      bottom left     centre 9m    NA    NA
+#> 171:        <NA>     1         NA      bottom left     centre 9m    NA    NA
+#> 172:          5      0         NA             post     centre 9m     1    NA
+#> 173:        <NA>     0         NA             <NA>          <NA>    NA    NA
+#>      vertical_goal_position horizontal_goal_position causes_7m_number
+#>                      <char>                   <char>           <char>
+#>   1:                   <NA>                     <NA>             <NA>
+#>   2:                   <NA>                     <NA>             <NA>
+#>   3:                   <NA>                     <NA>             <NA>
+#>   4:                   <NA>                     <NA>             <NA>
+#>   5:                    top                     left             <NA>
+#>  ---                                                                 
+#> 169:                 bottom                    right             <NA>
+#> 170:                 bottom                     left             <NA>
+#> 171:                 bottom                     left             <NA>
+#> 172:                   <NA>                     <NA>             <NA>
+#> 173:                   <NA>                     <NA>             <NA>
+#>      receives_7m_number turnover technical_foul  steal suspension is_home
+#>                  <char>   <char>         <char> <char>     <char>  <lgcl>
+#>   1:               <NA>     <NA>           <NA>   <NA>       <NA>    TRUE
+#>   2:               <NA>     <NA>           <NA>   <NA>       <NA>   FALSE
+#>   3:               <NA>       6            <NA>   <NA>       <NA>    TRUE
+#>   4:               <NA>     <NA>           <NA>    88        <NA>   FALSE
+#>   5:               <NA>     <NA>           <NA>   <NA>       <NA>   FALSE
+#>  ---                                                                     
+#> 169:               <NA>     <NA>           <NA>   <NA>       <NA>   FALSE
+#> 170:               <NA>     <NA>           <NA>   <NA>       <NA>    TRUE
+#> 171:               <NA>     <NA>           <NA>   <NA>       <NA>   FALSE
+#> 172:               <NA>     <NA>           <NA>   <NA>       <NA>    TRUE
+#> 173:               <NA>     <NA>            89    <NA>       <NA>   FALSE
+#>      number_suspended no_goalkeeper number_court_players possession
+#>                 <int>         <num>                <num>     <char>
+#>   1:                0            NA                   NA        USA
+#>   2:                0            NA                   NA        USA
+#>   3:                0             0                    6        USA
+#>   4:                0             0                    6        USA
+#>   5:                0             0                    6        EGY
+#>  ---                                                               
+#> 169:                0             0                    6        EGY
+#> 170:                0             0                    6        USA
+#> 171:                0             0                    6        EGY
+#> 172:                0             0                    6        USA
+#> 173:                0             0                    6        EGY
+#>      number_of_possession start_of_possession end_of_possession   score  lead
+#>                     <int>              <char>            <char>  <char> <num>
+#>   1:                    1                <NA>              <NA>   0 - 0     0
+#>   2:                    1                <NA>              <NA>   0 - 0     0
+#>   3:                    1                0:00              0:39   0 - 0     0
+#>   4:                    1                0:00              0:39   0 - 0     0
+#>   5:                    2                0:39              0:47   0 - 1    -1
+#>  ---                                                                         
+#> 169:                  115               57:22             57:33 15 - 34   -19
+#> 170:                  116               57:33             58:28 16 - 34   -18
+#> 171:                  117               58:28             59:11 16 - 35   -19
+#> 172:                  118               59:11             59:45 16 - 35   -19
+#> 173:                  119               59:45             60:00 16 - 35   -19
+#>      possession_length
+#>                  <num>
+#>   1:                NA
+#>   2:                NA
+#>   3:                39
+#>   4:                39
+#>   5:                 8
+#>  ---                  
+#> 169:                11
+#> 170:                55
+#> 171:                43
+#> 172:                34
+#> 173:                15
 ```
+
 
 ## Graficar ritmo de juego de ambos equipos a través del juego
 
