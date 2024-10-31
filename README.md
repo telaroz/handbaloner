@@ -296,4 +296,4 @@ match ID we want to visualize and returns the plot.
 plot_paces(tidy, 47)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/imagen_paces.png" width="100%" />

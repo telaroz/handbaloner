@@ -300,4 +300,4 @@ identificador del partido que queremos visualizar y devuelve el gráfico.
 plot_paces(tidy, 47)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/imagen_paces.png" width="100%" />
