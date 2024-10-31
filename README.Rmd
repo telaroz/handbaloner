@@ -151,7 +151,7 @@ Now, use the `generate_tidy_pbp` to generate a `data.frame` in a tidy format.
 
 ```{r generate tidy pbp}
 tidy <- generate_tidy_pbp("ejemplo/47PBP.PDF")
-gt::gt_preview(tidy)
+tidy
 ```
 
 ## Plot paces of both teams throughout the game
