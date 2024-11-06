@@ -1,7 +1,7 @@
 Package: handbaloner
 Type: Package
 Title: Utilities for handball data analysis.
-Version: 0.0.7
+Version: 0.1.0
 Authors@R: c(person("Valery", "Zúñiga Kondrashov", email = "telaroz@gmail.com",
     role = c("aut", "cre")),
     person("Philippe", "Heymans Smith", email = "pheymanss@gmail.com",
@@ -25,7 +25,8 @@ Imports:
     readr,
     stringr,
     purrr,
-    tabulapdf
+    tabulapdf,
+    countrycode
 Additional_repositories: https://github.com/jimjam-slam/ggflags
 Suggests:  
     ggflags
