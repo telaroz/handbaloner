@@ -4,10 +4,12 @@
 \alias{distance_to_goal}
 \title{Calcula la distancia a gol desde unas coordenadas en handbaloner::court()}
 \usage{
-distance_to_goal(shot_coordinates)
+distance_to_goal(x, y)
 }
 \arguments{
-\item{shot_coordinates}{Coordenadas del tiro (centro del campo en (0,0))}
+\item{x}{Coordenada x (centro del campo en (0, 0))}
+
+\item{y}{Coordenada y (centro del campo en (0, 0))}
 }
 \description{
 Toma el centro del campo como las coordenadas (0, 0) y calcula la distancia
@@ -17,6 +19,6 @@ lo calculará correctamente.
 }
 \examples{
 \dontrun{
-distance_to_goal(shot_coordinates = c(-10, -3))
+distance_to_goal(x = -10, y = -3)
 }
 }

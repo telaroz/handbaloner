@@ -27,7 +27,8 @@ draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start =
 #' a gol desde un punto en específico. El cálculo se toma desde el punto al gol
 #' más cercano, es decir, desde el propio campo. Un tiro del campo contrario no
 #' lo calculará correctamente.
-#' @param shot_coordinates Coordenadas del tiro (centro del campo en (0,0))
+#' @param x Coordenada x (centro del campo en (0, 0))
+#' @param y Coordenada y (centro del campo en (0, 0))
 #'
 #' @return
 #' @export
