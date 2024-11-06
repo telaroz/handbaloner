@@ -39,16 +39,18 @@ draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start =
 #' }
 distance_to_goal <- function(x, y){
 
-  shot_coordinates = c(x, y)
+  dtg2 <- function(x, y){
+    shot_coordinates = c(x, y)
+    starting_point <- as.numeric(unlist(strsplit(data.table::fcase(x >
+                                                                     0 & y < -1.5, paste(20, -1.5), x > 0 & y > 1.5, paste(20,
+                                                                                                                           1.5), x < 0 & y < -1.5, paste(-20, -1.5), x < 0 & y >
+                                                                     1.5, paste(-20, 1.5), x > 0 & data.table::between(y,
+                                                                                                                       -1.5, 1.5), paste(20, y), x < 0 & data.table::between(y,
+                                                                                                                                                                             -1.5, 1.5), paste(-20, y)), " ")))
+    sqrt(sum((starting_point - shot_coordinates)^2))
 
-  starting_point <- as.numeric(unlist(strsplit(data.table::fcase(x > 0 & y < -1.5, paste(20, -1.5),
-                                                                 x > 0 & y > 1.5, paste(20, 1.5),
-                                                                 x < 0 & y < -1.5, paste(-20, -1.5),
-                                                                 x < 0 & y > 1.5, paste(-20, 1.5),
-                                                                 x > 0 & data.table::between(y, -1.5, 1.5), paste(20, y),
-                                                                 x < 0 & data.table::between(y, -1.5, 1.5), paste(-20, y)),' ')))
-
-  sqrt(sum((starting_point - shot_coordinates) ^ 2))
+  }
+  purrr::map2_dbl(x, y, ~dtg2(.x, .y))
 }
 
 #' Function used to fill NAs in the possesions sections in pbp
