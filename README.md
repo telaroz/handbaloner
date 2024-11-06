@@ -70,7 +70,7 @@ distance from a point of the field to its closest goal, given some
 coordinates (\[-40, 40\] in the x axis and \[-20, 20\] in the y axis):
 
 ``` r
-distance_to_goal(c(10, 3))
+distance_to_goal(x = 10, y = 3)
 #> [1] 10.11187
 ```
 
@@ -84,15 +84,15 @@ shots <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
                        gol = c(1, 0, 1, 1, 0))
 
-dplyr::mutate(shots, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
+dplyr::mutate(shots, distance_to_goal = distance_to_goal(x, y))
 #> # A tibble: 5 × 4
 #>       x     y   gol distance_to_goal
 #>   <dbl> <dbl> <dbl>            <dbl>
-#> 1 -13       2     1             7.02
-#> 2 -12       5     0             8.73
-#> 3  11      -3     1             9.12
-#> 4 -11      -1     1             9   
-#> 5   9.5     0     0            10.5
+#> 1 -13       2     1             50.4
+#> 2 -12       5     0             50.4
+#> 3  11      -3     1             50.4
+#> 4 -11      -1     1             50.4
+#> 5   9.5     0     0             50.4
 ```
 
 ``` r
@@ -296,4 +296,4 @@ match ID we want to visualize and returns the plot.
 plot_paces(tidy, 47)
 ```
 
-<img src="man/figures/imagen_paces.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
