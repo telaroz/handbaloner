@@ -88,11 +88,11 @@ dplyr::mutate(shots, distance_to_goal = distance_to_goal(x, y))
 #> # A tibble: 5 × 4
 #>       x     y   gol distance_to_goal
 #>   <dbl> <dbl> <dbl>            <dbl>
-#> 1 -13       2     1             50.4
-#> 2 -12       5     0             50.4
-#> 3  11      -3     1             50.4
-#> 4 -11      -1     1             50.4
-#> 5   9.5     0     0             50.4
+#> 1 -13       2     1             7.02
+#> 2 -12       5     0             8.73
+#> 3  11      -3     1             9.12
+#> 4 -11      -1     1             9   
+#> 5   9.5     0     0            10.5
 ```
 
 ``` r
