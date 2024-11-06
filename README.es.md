@@ -71,7 +71,7 @@ punto del campo al marco más cercano, según sus coordenadas (\[-40, 40\]
 en el eje x y \[-20, 20\] en el eje y):
 
 ``` r
-distance_to_goal(c(10, 3))
+distance_to_goal(10 , 3)
 #> [1] 10.11187
 ```
 
@@ -86,7 +86,7 @@ tiros <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
                        gol = c(1, 0, 1, 1, 0))
 
-dplyr::mutate(tiros, distancia_a_gol = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
+dplyr::mutate(tiros, distancia_a_gol =  distance_to_goal(x, y))
 #> # A tibble: 5 x 4
 #>       x     y   gol distancia_a_gol
 #>   <dbl> <dbl> <dbl>           <dbl>

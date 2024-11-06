@@ -75,7 +75,7 @@ point of the field to its closest goal, given some coordinates ([-40, 40] in the
 x axis and [-20, 20] in the y axis): 
 
 ```{r}
-distance_to_goal(c(10, 3))
+distance_to_goal(x = 10, y = 3)
 ```
 
 Also, as this is a ggplot, we can add some additional layers. For example, let's
@@ -89,7 +89,7 @@ shots <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
                        gol = c(1, 0, 1, 1, 0))
 
-dplyr::mutate(shots, distance_to_goal = purrr::map2_dbl(x, y, ~ distance_to_goal(c(.x, .y))))
+dplyr::mutate(shots, distance_to_goal = distance_to_goal(x, y))
 
 ```
 
