@@ -82,24 +82,26 @@ a column and plot in green and red if the shots were goal or not.
 ``` r
 shots <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
-                       gol = c(1, 0, 1, 1, 0))
+                       goal = c(1, 0, 1, 1, 0)) |> 
+  dplyr::mutate(goal = as.character(goal)) 
 
 dplyr::mutate(shots, distance_to_goal = distance_to_goal(x, y))
 #> # A tibble: 5 × 4
-#>       x     y   gol distance_to_goal
-#>   <dbl> <dbl> <dbl>            <dbl>
-#> 1 -13       2     1             7.02
-#> 2 -12       5     0             8.73
-#> 3  11      -3     1             9.12
-#> 4 -11      -1     1             9   
-#> 5   9.5     0     0            10.5
+#>       x     y goal  distance_to_goal
+#>   <dbl> <dbl> <chr>            <dbl>
+#> 1 -13       2 1                 7.02
+#> 2 -12       5 0                 8.73
+#> 3  11      -3 1                 9.12
+#> 4 -11      -1 1                 9   
+#> 5   9.5     0 0                10.5
 ```
 
 ``` r
+
 court() +
-  ggplot2::geom_point(data = shots, ggplot2::aes(x, y),
-                      color = ifelse(shots$gol == 1, 'Green', 'Red'),
-                      size = 4)
+  ggplot2::geom_point(data = shots, ggplot2::aes(x, y, color = goal),
+                      size = 4) +
+  ggplot2::scale_color_manual(values = c("0" = "red", "1" = "green"))
 ```
 
 <img src="man/figures/README-court_with_shots-1.png" width="100%" />
@@ -131,12 +133,13 @@ Now, let’s draw some shots, just as we did with the court:
 ``` r
 goal_shots <- dplyr::tibble(x = c(-2, -1, 0.5, 0.7, 1.4),
                        y = c(0.2, 2, -0.5, 0.3, 0.9),
-                       gol = c(0, 0, 1, 1, 1))
+                       goal = c(0, 0, 1, 1, 1)) |> 
+  dplyr::mutate(goal = as.character(goal)) 
 
 draw_goal() +
-  ggplot2::geom_point(data = goal_shots, ggplot2::aes(x, y),
-                      color = ifelse(goal_shots$gol == 1, 'Green', 'Red'),
-                      size = 4)
+  ggplot2::geom_point(data = goal_shots, ggplot2::aes(x, y, color = goal),
+                      size = 4) +
+  ggplot2::scale_color_manual(values = c("0" = "red", "1" = "green"))
 ```
 
 <img src="man/figures/README-goal_with_shots-1.png" width="100%" />
