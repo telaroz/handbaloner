@@ -314,3 +314,132 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
                       y = 5,
                       label = for_means, fill = "#A6A5EE")
 }
+
+#' Takes a data.table with shots, locations (or coordinates) and if goal or not and displays them in around the goal
+#'
+#' @param data Shot data. If ihf_pbp = TRUE, `in_goal_position_column` and `goal_column` so that the funcions fills with the x, y coordinates. 
+#' @param ihf_pbp Should be TRUE if we get the shots data from IHF Play by Play. If not, we need the x and y coordinates columns as `x` and `y`. goal_column (categorical "0" - "1" ) is needed.
+#' @param goal_column Name of the column that indicates if there is a goal or not (should be in categorical "0" - "1" format)
+#' @param in_goal_position_column Name of the column that indicates the in goal position (if data has the IHF PBP format)
+#' @param ... additional parameters to pass to draw_goal
+#' 
+#' @return Plot with the goal and the shots displayed (green are goals and red not goals)
+#' @export
+#'
+#' @examples draw_shots_on_goal(data, TRUE)
+draw_shots_on_goal <- function(data, ihf_pbp = FALSE, goal_column = "goal", 
+in_goal_position_column = "in_goal_position", ...){
+  
+if (subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+  class() != "character") {
+  stop('The goal column should be a character column with "0" - "1" values')
+}
+  
+if (!subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+  setequal(c("0", "1"))) {
+stop('The goal column should be a character column with "0" - "1" values')
+}
+
+  coordinates <- in_goal_position_centroid
+
+  colnames(coordinates) <- c(in_goal_position_column, "x", "y")
+
+  sym_in_goal_position_column <- as.name(in_goal_position_column)
+  sym_goal_column <- as.name(goal_column)
+  
+  if (ihf_pbp){
+    
+    data <- data.table::as.data.table(data) |> 
+      data.table::merge.data.table(coordinates, by = in_goal_position_column, 
+                                   all.x = TRUE)
+    
+    draw_goal(...) +
+      ggplot2::geom_point(data = data, ggplot2::aes(x = x, y = y, 
+                                                     fill = !!sym_goal_column), 
+                          size = 4, shape = 21, color = "black",
+                          position = ggplot2::position_jitter(width = 0.25,
+                                                              height = 0.2)) +
+      ggplot2::scale_fill_manual(values = c("0" = "red", "1" = "green")) +
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::geom_text(data = data[get(in_goal_position_column) %in% c("blocked", "missed", "post")],
+                         ggplot2::aes(x = x, y = y + 0.25, 
+                                      label = !!sym_in_goal_position_column))
+  } else {
+    handbaloner::draw_goal(color = "blue") +
+      ggplot2::geom_point(data = data, ggplot2::aes(x = x, y = y, 
+                                                     fill = !!sym_goal_column),
+                          size = 4, shape = 21, color = "black") +
+      ggplot2::scale_fill_manual(values = c("0" = "red","1" = "green")) +
+      ggplot2::theme(legend.position = "none")
+  }
+}
+
+
+#' Takes a data.table with shots, locations (or coordinates) and if goal or not and displays them in the court
+#'
+#' @param data Shot data. If ihf_pbp = TRUE, `in_goal_position_column` and `goal_column` so that the funcions fills with the x, y coordinates. 
+#' @param ihf_pbp Should be TRUE if we get the shots data from IHF Play by Play. If not, we need the x and y coordinates columns as `x` and `y`. goal_column (categorical "0" - "1" ) is needed.
+#' @param goal_column Name of the column that indicates if there is a goal or not (should be in categorical "0" - "1" format)
+#' @param shot_position_column Name of the column that indicates the in court position (if data has the IHF PBP format)
+#' @param ... Aditional parameters to pass to `handbaloner::half_court()`
+#' 
+#' @return Plot with the goal and the shots displayed (green are goals and red not goals)
+#' @export
+#'
+#' @examples draw_shots_on_half_court(data, TRUE)
+draw_shots_on_half_court <- function(data, ihf_pbp = FALSE, goal_column = "goal", 
+                                     shot_position_column = "shot_position", ...){
+  
+if (subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+  class() != "character") {
+  stop('The goal column should be a character column with "0" - "1" values')
+}
+  
+if (!subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+  setequal(c("0", "1"))) {
+stop('The goal column should be a character column with "0" - "1" values')
+}
+  coordinates <- in_court_position
+
+  colnames(coordinates) <- c(shot_position_column, "x", "y")
+
+  sym_shot_position_column <- as.name(shot_position_column)
+  sym_goal_column <- as.name(goal_column)
+  
+  if (ihf_pbp){
+    
+    data <- data.table::as.data.table(data) |> 
+      data.table::merge.data.table(coordinates, by = shot_position_column, 
+                                   all.x = TRUE)
+    
+    handbaloner::half_court(...) +
+      ggplot2::geom_point(data = data[get(shot_position_column) != "Penalty"],
+                          ggplot2::aes(x = x, y = y, fill = !!sym_goal_column),
+                          size = 2, shape = 21, colour = "black",
+                          position = ggplot2::position_jitter(width = 1,
+                                                              height = 0.25)) +
+      ggplot2::geom_point(data = data[get(sym_shot_position_column) == "Penalty"],
+                          ggplot2::aes(x = x, y = y, fill = !!sym_goal_column),
+                          size = 2, shape = 21, colour = "black",
+                          position = ggplot2::position_jitter(width = 0.45,
+                                                              height = 0.2)) +
+      ggplot2::scale_fill_manual(values = c("0" = "red","1" = "green")) +
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::geom_text(data = data[get(shot_position_column) %in% 
+        c("fast break", "empty goal",
+          "breakthrough")],
+                         ggplot2::aes(x = x, y = y + 0.7, 
+                                      label = !!sym_shot_position_column),
+                         color = "white")
+  } else {
+    handbaloner::half_court() +
+      ggplot2::geom_point(data = data,
+                          ggplot2::aes(x = x, y = y, 
+                                       fill = !!sym_goal_column),
+                          size = 2, shape = 21, colour = "black",
+                          position = ggplot2::position_jitter(width = 1,
+                                                              height = 0.25)) +
+      ggplot2::scale_fill_manual(values = c("0" = "red","1" = "green")) +
+      ggplot2::theme(legend.position = "none") 
+  }
+}

@@ -30,7 +30,7 @@ draw_circle <- function(center = c(0, 0), diameter = 1, npoints = 12000, start =
 #' @param x Coordenada x (centro del campo en (0, 0))
 #' @param y Coordenada y (centro del campo en (0, 0))
 #'
-#' @return
+#' @return double 
 #' @export
 #'
 #' @examples
@@ -58,7 +58,7 @@ distance_to_goal <- function(x, y){
 #' @param tabla Tabla que recibe
 #' @param columna Columna a llenar los NAs
 #'
-#' @return
+#' @return table without NAs
 #' @export
 #'
 #' @examples fill_nas(table, 'numero_jugada')
@@ -77,7 +77,7 @@ fill_nas <- function(table, column){
 #' @param folder Folder were the pdfs will be downloaded
 #' @param from_archive Whether the pdfs are in the archive.ihf.info site
 #'
-#' @return
+#' @return NULL
 #' @export
 #'
 #' @examples scrape_from_ihf(link = 'https://www.ihf.info/competitions/men/308/27th-ihf-men039s-world-championship-2021/22415/match-center/23765', carpeta = 'matches')
@@ -104,7 +104,7 @@ scrape_from_ihf <- function(link, folder, from_archive = FALSE){
 #' @param bands_column_name Name of the column to be created.
 #' @param number_bands Whether or not to add numbering to the bands.
 #'
-#' @return
+#' @return a column with added values
 #' @export
 #'
 #' @examples

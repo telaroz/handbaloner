@@ -11,6 +11,9 @@ distance_to_goal(x, y)
 
 \item{y}{Coordenada y (centro del campo en (0, 0))}
 }
+\value{
+double
+}
 \description{
 Toma el centro del campo como las coordenadas (0, 0) y calcula la distancia
 a gol desde un punto en específico. El cálculo se toma desde el punto al gol
