@@ -11,6 +11,9 @@ fill_nas(table, column)
 
 \item{columna}{Columna a llenar los NAs}
 }
+\value{
+table without NAs
+}
 \description{
 Function used to fill NAs in the possesions sections in pbp
 }

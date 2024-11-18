@@ -84,9 +84,10 @@ verde si fueron gol o no.
 ``` r
 tiros <- dplyr::tibble(x = c(-13, -12, 11, -11, 9.5),
                        y = c(2, 5, -3, -1, 0),
-                       gol = c(1, 0, 1, 1, 0))
+                       gol = c(1, 0, 1, 1, 0)) |>
+               dplyr::mutate(gol = as.character(gol))
 
-dplyr::mutate(tiros, distancia_a_gol =  distance_to_goal(x, y))
+dplyr::mutate(tiros, distancia_a_gol =  distance_to_goal(x, y)) 
 #> # A tibble: 5 x 4
 #>       x     y   gol distancia_a_gol
 #>   <dbl> <dbl> <dbl>           <dbl>
@@ -99,9 +100,9 @@ dplyr::mutate(tiros, distancia_a_gol =  distance_to_goal(x, y))
 
 ``` r
 court() +
-  ggplot2::geom_point(data = tiros, ggplot2::aes(x, y),
-                      color = ifelse(tiros$gol == 1, 'Green', 'Red'),
-                      size = 4)
+  ggplot2::geom_point(data = tiros, ggplot2::aes(x, y, color = gol),
+                      size = 4) +
+  ggplot2::scale_color_manual(values = c("0" = "red", "1" = "green"))
 ```
 
 <img src="man/figures/README-court_with_shots-1.png" width="100%" />
@@ -133,12 +134,13 @@ Ahora, dibujemos algunos tiros, como hicimos con el campo completo
 ``` r
 tiros_a_gol <- dplyr::tibble(x = c(-2, -1, 0.5, 0.7, 1.4),
                        y = c(0.2, 2, -0.5, 0.3, 0.9),
-                       gol = c(0, 0, 1, 1, 1))
+                       gol = c(0, 0, 1, 1, 1)) |>
+               dplyr::mutate(gol = as.character(gol))
 
 draw_goal() +
-  ggplot2::geom_point(data = tiros_a_gol, ggplot2::aes(x, y),
-                      color = ifelse(tiros_a_gol$gol == 1, 'Green', 'Red'),
-                      size = 4)
+  ggplot2::geom_point(data = tiros_a_gol, ggplot2::aes(x, y, color = gol),
+                      size = 4) +
+  ggplot2::scale_color_manual(values = c("0" = "red", "1" = "green"))
 ```
 
 <img src="man/figures/README-goal_with_shots-1.png" width="100%" />

@@ -32,3 +32,22 @@ complete_team_names <-
   ][, lower_ggflag := tolower(lower_ggflag)]
 
 usethis::use_data(complete_team_names, complete_team_names, overwrite = TRUE)
+
+
+in_goal_position_centroid <- data.table::data.table(in_goal_position = c("blocked", "bottom centre", 
+"bottom left", "bottom right", "middle centre", "middle left", 
+"middle right", "missed", "post", "top centre", "top left", "top right"),
+ x = c(1.85, 0, -1.125, 1.125, 0, -1.125, 1.125, 0, -1.85, 
+0, -1.125, 1.125), 
+y = c(0, -0.75, -0.75, -0.75, 0, 0, 0, 1.35, 
+0, 0.75, 0.75, 0.75))
+
+
+in_court_position <- data.table::data.table(shot_position = c("Penalty", "breakthrough", "fast break", 
+"empty goal", "centre 6m", "centre 9m", "left 6m", "left 9m", 
+"left wing", "right 6m", "right 9m", "right wing"), 
+x = c(0, 7.5, -7.5, 0, 0, 0, -5.5, -6, -8.7, 5.5, 6, 8.7),
+y = c(12.6, 6, 6, 6, 13.5, 9.5, 14.3, 11, 19, 14.3, 11, 19))
+
+usethis::use_data(in_goal_position_centroid, in_goal_position_centroid, overwrite = TRUE)
+usethis::use_data(in_court_position, in_court_position, overwrite = TRUE)
