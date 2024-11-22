@@ -171,7 +171,7 @@ draw_goal <- function(color = "#b90d16"){
 #' @importFrom ggplot2 layer
 plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
   library(ggflags)
-  raw_data <- pbp_data
+  raw_data <- data.table::as.data.table(pbp_data)
 
   data <- raw_data[start_of_possession != "",
                    .(match_id, score, half, team, teams, is_home, number_of_possession,
@@ -182,12 +182,12 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
 
   data[, start_of_possession := data.table::fifelse(stringr::str_length(start_of_possession) == 8,
                                                     stringr::str_sub(start_of_possession, 1, 5),
-                                                    start_of_possession)]
+                                                    as.character(start_of_possession)))]
 
 
   data[, end_of_possession := data.table::fifelse(stringr::str_length(end_of_possession) == 8,
                                                   stringr::str_sub(end_of_possession, 1, 5),
-                                                  end_of_possession)]
+                                                  as.character(end_of_possession)))]
 
   data[, possession_length := as.numeric(lubridate::ms(end_of_possession)) -
          as.numeric(lubridate::ms(start_of_possession))]
