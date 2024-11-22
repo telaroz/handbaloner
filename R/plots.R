@@ -365,7 +365,7 @@ stop('The goal column should be a character column with "0" - "1" values')
                          ggplot2::aes(x = x, y = y + 0.25, 
                                       label = !!sym_in_goal_position_column))
   } else {
-    handbaloner::draw_goal(color = "blue") +
+    draw_goal(...) +
       ggplot2::geom_point(data = data, ggplot2::aes(x = x, y = y, 
                                                      fill = !!sym_goal_column),
                           size = 4, shape = 21, color = "black") +
