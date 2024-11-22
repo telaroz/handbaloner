@@ -330,12 +330,12 @@ plot_paces <- function(pbp_data, chosen_match_id, move_explanation_right = 0){
 draw_shots_on_goal <- function(data, ihf_pbp = FALSE, goal_column = "goal", 
 in_goal_position_column = "in_goal_position", ...){
   
-if (subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+if (subset(data, select = goal_column, drop = TRUE) |> 
   class() != "character") {
   stop('The goal column should be a character column with "0" - "1" values')
 }
   
-if (!subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+if (!subset(data, select = goal_column, drop = TRUE) |> 
   setequal(c("0", "1"))) {
 stop('The goal column should be a character column with "0" - "1" values')
 }
@@ -390,12 +390,12 @@ stop('The goal column should be a character column with "0" - "1" values')
 draw_shots_on_half_court <- function(data, ihf_pbp = FALSE, goal_column = "goal", 
                                      shot_position_column = "shot_position", ...){
   
-if (subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+if (subset(data, select = goal_column, drop = TRUE) |> 
   class() != "character") {
   stop('The goal column should be a character column with "0" - "1" values')
 }
   
-if (!subset(datos_egipto, select = goal_column, drop = TRUE) |> 
+if (!subset(data, select = goal_column, drop = TRUE) |> 
   setequal(c("0", "1"))) {
 stop('The goal column should be a character column with "0" - "1" values')
 }
